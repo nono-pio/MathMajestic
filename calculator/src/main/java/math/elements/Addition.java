@@ -54,9 +54,9 @@ public class Addition extends Element{
     }
 	
 	public void setValues(Element[] values) { this.values = values; }
-	public String toString(ElementType parentType, boolean isLaTeX) {
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
 		
-		String str = StringFormat.arrayStr(values, " + ", getType(), isLaTeX);
+		String str = StringFormat.arrayStr(values, " + ");
 		
         if (parentType == null || parentType == ElementType.Division || parentType == ElementType.Addition) return str;
         else return StringFormat.bracket(str, isLaTeX);

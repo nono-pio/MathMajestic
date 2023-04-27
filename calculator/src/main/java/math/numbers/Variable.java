@@ -48,7 +48,7 @@ public class Variable extends Element {
 	}
 
 	public void setValues(Element[] values) {}
-	public String toString(ElementType parentType, boolean isLaTeX) { return variable; }
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) { return variable; }
 	
 	public void setVariable(HashMap<String, VariableData> variables, int[] curPath, Number value) {
         variableData = GlobalVariable.setVariable(variable, null, variables);

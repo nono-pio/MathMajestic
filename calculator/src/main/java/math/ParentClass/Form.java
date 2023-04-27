@@ -5,7 +5,6 @@ import math.numbers.Number;
 public abstract class Form extends Element {
 
 	
-	
 	public abstract Element toElement();
 	public abstract Element clone();
 	
@@ -18,7 +17,7 @@ public abstract class Form extends Element {
 		// TODO Auto-generated method stub
 
 	}
-	public String toString(ElementType parentType, boolean isLaTeX) {
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
 		return toElement().toString(parentType, isLaTeX); }
 	public Element clonedSimplify() { return toElement().clonedSimplify(); }
 

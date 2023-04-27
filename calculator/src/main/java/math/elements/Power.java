@@ -36,12 +36,12 @@ public class Power extends Element {
 		base = values[0];
 		exponent = values[1]; 
 	}
-	public String toString(ElementType parentType, boolean isLaTeX) {
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
 		String str;
 		if (isLaTeX)
-			str = "{" + base.toString(getType(), isLaTeX) + "}^{" + exponent.toString(getType(), isLaTeX) +"}";
+			str = "{" + values[0] + "}^{" + values[1] +"}";
 		else
-			str = "(" + base.toString(getType(), isLaTeX) + ")^(" + exponent.toString(getType(), isLaTeX) +")";
+			str = "(" + values[0] + ")^(" + values[1] +")";
 		if (parentType == ElementType.Power)
 			return StringFormat.bracket(str, isLaTeX);
 		else return str;

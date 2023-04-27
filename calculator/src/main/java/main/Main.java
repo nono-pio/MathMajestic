@@ -19,8 +19,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		StringConverter str = new StringConverter("1 + 35 * x");
-		print(str.toString() + " = " + str.toElement());
+		print(new Addition(n1, n2, new Log(n2, x)));
 		
 		//print("");
 		//element.forEach((e, p) -> print(e.getType() + " : " + e));

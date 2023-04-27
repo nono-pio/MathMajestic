@@ -52,11 +52,12 @@ public class Number extends Element{
 	}
 
 	public void setValues(Element[] values) {}
-	public String toString(ElementType parentType, boolean isLaTeX) {
-		if (isInteger()) return String.valueOf(toInteger());
-		return String.valueOf(value); }
+	
 	public Element clone() { return new Number(value); }
 	public Element clonedSimplify() { return this; }
 	@Override
 	public Element simplify() { return clone(); }
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
+		if (isInteger()) return String.valueOf(toInteger());
+		return String.valueOf(value); }
 }

@@ -16,7 +16,17 @@ public abstract class Element implements Comparable<Element> {
 
     public abstract Element[] getValues();
     public abstract void setValues(Element[] values);
-    public abstract String toString(ElementType parentType, boolean isLaTeX);
+    
+    protected abstract String toString(ElementType parentType, boolean isLaTeX, String[] values);
+    protected String toString(ElementType parentType, boolean isLaTeX)
+    {
+    	Element[] childs = getValues();
+    	String[] childString = new String[childs.length];
+    	for (int i = 0; i < childString.length; i++) {
+			childString[i] = childs[i].toString(getType(), isLaTeX);
+		}
+    	return toString(parentType, isLaTeX, childString);
+    }
     public String toString() { return toString(null, false); }
     public String toLaTeX() { return toString(null, true); } 
     

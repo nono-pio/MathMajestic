@@ -61,9 +61,9 @@ public class Product extends Element{
     	return new Product(rest.toArray(new Element[rest.size()]));
     }
 	public void setValues(Element[] values) { this.values = values; }
-	public String toString(ElementType parentType, boolean isLaTeX) {
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
 		
-		String str = StringFormat.arrayStr(values, isLaTeX? " \\cdot " : " * ", getType(), isLaTeX);
+		String str = StringFormat.arrayStr(values, isLaTeX? " \\cdot " : " * ");
 		
 		if (parentType == null || parentType == ElementType.Addition) return str;
 		else return StringFormat.bracket(str, isLaTeX);

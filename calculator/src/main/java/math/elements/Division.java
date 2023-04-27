@@ -58,10 +58,10 @@ public class Division extends Element{
 		this.numerator = values[0];
 		this.denominator = values[1];
 	}
-	public String toString(ElementType parentType, boolean isLaTeX) {
-		if (isLaTeX) return "\\frac{" + numerator.toLaTeX() + "}{"+ denominator.toLaTeX() +"}";
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
+		if (isLaTeX) return "\\frac{" + values[0] + "}{"+ values[1] +"}";
 		else {
-			String str = numerator.toString(getType(), isLaTeX) + "/" + denominator.toString(getType(), isLaTeX);
+			String str = values[0] + "/" + values[1];
 			if (parentType == null || parentType == ElementType.Addition) return str;
 			else return StringFormat.bracket(str, isLaTeX);
 		}

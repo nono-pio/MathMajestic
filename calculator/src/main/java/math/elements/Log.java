@@ -38,14 +38,14 @@ public class Log extends Element {
 		base = values[0];
 		value = values[1];
 	}
-	public String toString(ElementType parentType, boolean isLaTeX) {
+	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
 		String str;
 		if (isLaTeX)
 		{
-			String strBase = "log_{\\small "+ base.toString(getType(), isLaTeX) +"}";
-			str = strBase + "{" + StringFormat.bracket(value.toString(getType(), isLaTeX), isLaTeX) + "}";
+			String strBase = "log_{\\small "+ values[0] +"}";
+			str = strBase + "{" + StringFormat.bracket(values[1], isLaTeX) + "}";
 		} else
-			str = "log_" + StringFormat.bracket(base.toString(getType(), isLaTeX), isLaTeX) + StringFormat.bracket(value.toString(getType(), isLaTeX), isLaTeX);
+			str = "log_" + StringFormat.bracket(values[0], isLaTeX) + StringFormat.bracket(values[1], isLaTeX);
 		if (parentType == ElementType.Power)
 			return StringFormat.bracket(str, isLaTeX);
 		else return str;

@@ -13,13 +13,9 @@ public final class StringFormat {
 		else return "(" + value + ")";
 	}
 	 
-	public static String arrayStr(Element[] values, String separator, ElementType type, boolean isLaTex)
+	public static String arrayStr(String[] values, String separator)
 	{
-		StringBuilder str = new StringBuilder(values[0].toString(type, isLaTex));
-		for (int i = 1; i < values.length; i++) {
-			str.append(separator + values[i].toString(type, isLaTex));
-		}
-		return str.toString();
+		return String.join(separator, values);
 	}
 
 }
