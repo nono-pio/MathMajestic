@@ -5,6 +5,7 @@ import java.util.HashMap;
 import math.ParentClass.Element;
 import math.ParentClass.ElementType;
 import math.tools.ErrorMessage;
+import math.tools.StringSettings;
 
 public class Variable extends Element {
 
@@ -23,7 +24,7 @@ public class Variable extends Element {
     }
 
     public ElementType getType() { return ElementType.Variable; }
-    public Number toValue() {
+    public Number toValue(Number[] values) {
         if (variableData == null || variableData.value == null) throw ErrorMessage.VariableNotSet(variable);
         return variableData.value;
     }
@@ -48,7 +49,12 @@ public class Variable extends Element {
 	}
 
 	public void setValues(Element[] values) {}
-	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) { return variable; }
+	public String toString(ElementType parentType, StringSettings settings, String[] values)
+	{
+		if (settings.showVariableValue && variableData.value != null)
+			return variableData.value.toString();
+		return variable;
+	}
 	
 	public void setVariable(HashMap<String, VariableData> variables, int[] curPath, Number value) {
         variableData = GlobalVariable.setVariable(variable, null, variables);

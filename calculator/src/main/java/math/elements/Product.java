@@ -3,11 +3,13 @@ package math.elements;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import math.MathN;
 import math.ParentClass.Element;
 import math.ParentClass.ElementType;
 import math.math.AdditionExtention;
 import math.numbers.Number;
 import math.tools.StringFormat;
+import math.tools.StringSettings;
 import math.tools.Tools;
 import math.tools.ElementCoef;
 
@@ -22,13 +24,7 @@ public class Product extends Element{
 
 
     public ElementType getType() { return ElementType.Product; }
-    public Number toValue() {
-        Number prod = new Number(1);
-        for (Element value : values) {
-            prod.mult(value.toValue());
-        }
-        return prod;
-    }
+    public Number toValue(Number[] values) { return MathN.product(values); }
     public Element[] getValues() { return values; }
     public Element recipFunction(int[] path, Element curRecip) {
         
@@ -61,12 +57,12 @@ public class Product extends Element{
     	return new Product(rest.toArray(new Element[rest.size()]));
     }
 	public void setValues(Element[] values) { this.values = values; }
-	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
+	public String toString(ElementType parentType, StringSettings settings, String[] values) {
 		
-		String str = StringFormat.arrayStr(values, isLaTeX? " \\cdot " : " * ");
+		String str = StringFormat.arrayStr(values, settings.isLaTeX? " \\cdot " : " * ");
 		
 		if (parentType == null || parentType == ElementType.Addition) return str;
-		else return StringFormat.bracket(str, isLaTeX);
+		else return StringFormat.bracket(str, settings.isLaTeX);
 	}
 	public Element clone() { return new Product(Tools.cloneElementArray(values)); }
 	public Element clonedSimplify()

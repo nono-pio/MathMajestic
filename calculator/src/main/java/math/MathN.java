@@ -15,6 +15,22 @@ public class MathN {
     public static Number cos(Number a) { return new Number((float) Math.cos(a.value)); }
     public static Number tan(Number a) { return new Number((float) Math.tan(a.value)); }
 
+    public static Number sum(Number ... numbers)
+    {
+    	Number sum = new Number(0);
+    	for (int i = 0; i < numbers.length; i++) {
+			sum.add(numbers[i]);
+		}
+    	return sum;
+    }
+    public static Number product(Number ... numbers)
+    {
+    	Number sum = new Number(0);
+    	for (int i = 0; i < numbers.length; i++) {
+			sum.mult(numbers[i]);
+		}
+    	return sum;
+    }
 
     public static final Number PI = new Number( (float) Math.PI );
     public static final Number E = new Number( (float) Math.E );

@@ -14,7 +14,7 @@ public class AritmeticSequence extends ParentElement{
         this.sequence = sequence.clone();
     } 
 
-    public Number toValue() { return sequence.toValue(); }
+    public Number toValue(Number[] values) { return sequence.toValue(values); }
 
     @Override
     public String toString() { return sequence.toString(); }

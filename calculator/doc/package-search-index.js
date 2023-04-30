@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"api"},{"l":"latex"},{"l":"main"},{"l":"math"},{"l":"math.elements"},{"l":"math.forms"},{"l":"math.math"},{"l":"math.numbers"},{"l":"math.ParentClass"},{"l":"math.ParentsElements"},{"l":"math.string_converter"},{"l":"math.tools"},{"l":"test"}];updateSearchResults();

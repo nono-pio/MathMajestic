@@ -9,10 +9,6 @@ public class LaTex {
     TeXFormula formula;
     TeXIcon icon;
     public String math;
-    
-    public LaTex(){
-        // ...
-    }
 
     public LaTex(String math){    
         this.math = math;

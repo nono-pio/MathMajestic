@@ -5,6 +5,7 @@ import java.util.Arrays;
 import latex.*;
 import math.MathN;
 import math.ParentClass.*;
+import math.ParentClass.Element.NumberResponse;
 import math.ParentsElements.AritmeticSequence;
 import math.ParentsElements.Equation;
 import math.elements.*;
@@ -13,13 +14,21 @@ import math.numbers.GlobalVariable;
 import math.numbers.Number;
 import math.numbers.Variable;
 import math.string_converter.StringConverter;
+import math.tools.StringSettings;
 
 @SuppressWarnings("unused")
 public class Main {
 
 	public static void main(String[] args) {
 
-		print(new Addition(n1, n2, new Log(n2, x)));
+		Element add = new Addition(y, z, new Log(a, x));
+		
+		GlobalVariable.setVariable("x", n2);
+		GlobalVariable.setVariable("y", n2);
+		GlobalVariable.setVariable("z", n2);
+		GlobalVariable.setVariable("a", n5);
+		
+		print(add);
 		
 		//print("");
 		//element.forEach((e, p) -> print(e.getType() + " : " + e));

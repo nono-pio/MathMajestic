@@ -6,6 +6,7 @@ import math.ParentClass.ElementType;
 import math.numbers.Number;
 import math.tools.ErrorMessage;
 import math.tools.StringFormat;
+import math.tools.StringSettings;
 
 public class Division extends Element{
 
@@ -19,7 +20,7 @@ public class Division extends Element{
     }
 
     public ElementType getType() { return ElementType.Division; }
-    public Number toValue() { return MathN.div(numerator.toValue(), denominator.toValue()); }
+    public Number toValue(Number[] values) { return MathN.div(values[0], values[1]); }
     public Element[] getValues() { return new Element[] {numerator, denominator}; }
     public Element recipFunction(int[] path, Element curRecip)
     {
@@ -53,17 +54,17 @@ public class Division extends Element{
         return new Division(numSim, denSim);
     }
 
-    public String toLaTeX() { return "\\frac{" + numerator.toLaTeX() + "}{"+ denominator.toLaTeX() +"}"; }
 	public void setValues(Element[] values) {
 		this.numerator = values[0];
 		this.denominator = values[1];
 	}
-	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
-		if (isLaTeX) return "\\frac{" + values[0] + "}{"+ values[1] +"}";
+	public String toString(ElementType parentType, StringSettings settings, String[] values) {
+		if (settings.isLaTeX)
+			return "\\frac{" + values[0] + "}{"+ values[1] +"}";
 		else {
 			String str = values[0] + "/" + values[1];
 			if (parentType == null || parentType == ElementType.Addition) return str;
-			else return StringFormat.bracket(str, isLaTeX);
+			else return StringFormat.bracket(str, settings.isLaTeX);
 		}
 	}
 	public Element clone() { return new Division(numerator.clone(), denominator.clone()); }

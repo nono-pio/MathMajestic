@@ -6,6 +6,7 @@ import math.ParentClass.ElementType;
 import math.math.AdditionExtention;
 import math.numbers.Number;
 import math.tools.StringFormat;
+import math.tools.StringSettings;
 
 public class Power extends Element {
 	
@@ -19,7 +20,7 @@ public class Power extends Element {
 	}
 
 	public ElementType getType() { return ElementType.Power; }
-	public Number toValue() { return MathN.pow(base.toValue(), exponent.toValue()); }
+	public Number toValue(Number[] values) { return MathN.pow(values[0], values[1]); }
 	public Element recipFunction(int[] path, Element curRecip) {
 		if (path[0] == 0)
 		{
@@ -36,14 +37,14 @@ public class Power extends Element {
 		base = values[0];
 		exponent = values[1]; 
 	}
-	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
+	public String toString(ElementType parentType, StringSettings settings, String[] values) {
 		String str;
-		if (isLaTeX)
+		if (settings.isLaTeX)
 			str = "{" + values[0] + "}^{" + values[1] +"}";
 		else
 			str = "(" + values[0] + ")^(" + values[1] +")";
 		if (parentType == ElementType.Power)
-			return StringFormat.bracket(str, isLaTeX);
+			return StringFormat.bracket(str, settings.isLaTeX);
 		else return str;
 	}
 	public Element clone() { return new Power(base.clone(), exponent.clone()); }

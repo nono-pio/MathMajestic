@@ -3,6 +3,7 @@ package math.numbers;
 import math.ParentClass.Element;
 import math.ParentClass.ElementType;
 import math.tools.ErrorMessage;
+import math.tools.StringSettings;
 
 public class Number extends Element{
     
@@ -34,7 +35,7 @@ public class Number extends Element{
     public int toInteger() { return (int) value; }
     
     public ElementType getType() { return ElementType.Number; }
-    public Number toValue() { return this; }
+    public Number toValue(Number[] values) { return this; }
     public Element[] getValues() { return new Element[0]; }
     public Number reciprocal(int[] path, Number value) { throw ErrorMessage.NumberRecip(); }
     public Element recipFunction(int[] path, Element curRecip) { throw ErrorMessage.NumberRecip(); }
@@ -57,7 +58,7 @@ public class Number extends Element{
 	public Element clonedSimplify() { return this; }
 	@Override
 	public Element simplify() { return clone(); }
-	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
+	public String toString(ElementType parentType, StringSettings settings, String[] values) {
 		if (isInteger()) return String.valueOf(toInteger());
 		return String.valueOf(value); }
 }

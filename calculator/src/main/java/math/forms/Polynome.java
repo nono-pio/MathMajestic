@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import math.numbers.Number;
+import math.tools.StringSettings;
 import math.ParentClass.Element;
 import math.ParentClass.ElementType;
 import math.ParentClass.Form;
@@ -37,7 +38,7 @@ public class Polynome extends Form {
 	}
 
 	@Override
-	public String toString(ElementType parentType, boolean isLaTeX) {
+	public String toString(ElementType parentType, StringSettings settings) {
 		// TODO Auto-generated method stub
 		StringBuilder str = new StringBuilder(monomes.get(0).toString());
 		for (int i = 1; i < monomes.size(); i++) {

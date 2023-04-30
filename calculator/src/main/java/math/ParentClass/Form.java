@@ -1,6 +1,7 @@
 package math.ParentClass;
 
 import math.numbers.Number;
+import math.tools.StringSettings;
 
 public abstract class Form extends Element {
 
@@ -9,7 +10,7 @@ public abstract class Form extends Element {
 	public abstract Element clone();
 	
 	public ElementType getType() { return ElementType.Form; }
-	public Number toValue() { return toElement().toValue(); }
+	public Number toValue(Number[] values) { return toElement().toValue(values); }
 	public Element recipFunction(int[] path, Element curRecip) {
 		return toElement().recipFunction(path, curRecip); }
 	public Element[] getValues() { return toElement().getValues(); }
@@ -17,8 +18,8 @@ public abstract class Form extends Element {
 		// TODO Auto-generated method stub
 
 	}
-	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
-		return toElement().toString(parentType, isLaTeX); }
+	public String toString(ElementType parentType, StringSettings settings, String[] values) {
+		return toElement().toString(parentType, settings); }
 	public Element clonedSimplify() { return toElement().clonedSimplify(); }
 
 }

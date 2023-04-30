@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import api.ElementTree;
+import api.Tree;
 import math.ParentClass.Element;
 import math.string_converter.StringConverter;
 
@@ -36,6 +36,12 @@ public class MainApplication {
 	  Element element = new StringConverter(input).toElement();
 	  Response response = new Response(input, element, element.toString());
 	  return response;
+  }
+  
+  @GetMapping("/api/v1/tree/")
+  public Tree tree(@RequestParam(value = "input", defaultValue = "0") String input)
+  {
+	  return new Tree(new StringConverter(input).toElement());
   }
   
   record Response(String input, Element element, String output) {}

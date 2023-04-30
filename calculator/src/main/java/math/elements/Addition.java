@@ -2,76 +2,71 @@ package math.elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import math.MathN;
 import math.ParentClass.Element;
 import math.ParentClass.ElementType;
 import math.numbers.Number;
 import math.tools.StringFormat;
+import math.tools.StringSettings;
 import math.tools.Tools;
 import math.tools.ElementCoef;
 
 
 public class Addition extends Element{
 
-    public Element[] values;
+    public List<Element> values;
 
-    public Addition(Element[] values) { this.values = values; }
-    public Addition(Element value1, Element value2) { this.values = new Element[] {value1, value2}; }
+    public Addition(Element ... values) { this.values = List.of(values); }
     public Addition(Element value1, Element value2, boolean subtract)
     {
         if (subtract)
-            this.values = new Element[] {value1, new Product(new Number(-1), value2)};
+            this.values = List.of(value1, new Product(new Number(-1), value2));
         else
-            this.values = new Element[] {value1, value2};
+        	this.values = List.of(value1, value2);
     }
-    public Addition(Element value1, Element value2, Element value3) { this.values = new Element[] {value1, value2, value3}; }
-    public Addition(List<Element> list) {
-		this.values = list.toArray(new Element[list.size()]); }
+    public Addition(List<Element> values) { this.values = values; }
     
-	public Number toValue() {
-        Number sum = new Number(0);
-        for (Element value : values) {
-            sum.add(value.toValue());
-        }
-        return sum;
-    }
-    public Element[] getValues() {return values;}
+	public Number toValue(Number[] values) { return MathN.sum(values); }
+    public Element[] getValues() { return values.toArray(new Element[values.size()]); }
     public ElementType getType() { return ElementType.Addition; }
     public Element recipFunction(int[] path, Element curRecip) {
-        Element[] newRecip = new Element[values.length];
+    	
+        Element[] newRecip = new Element[values.size()];
         int index = 1;
-        for (int i = 0; i < values.length; i++) {
+        for (int i = 0; i < values.size(); i++) {
             if (i != path[0])
             {
-                newRecip[index] = new Product(new Number(-1), values[i]);
+                newRecip[index] = new Product(new Number(-1), values.get(i));
                 index++;
             }
         }
         newRecip[0] = curRecip;
 
-        return values[path[0]].recipFunction(newPath(path), new Addition(newRecip));
+        return values.get(path[0]).recipFunction(newPath(path), new Addition(newRecip));
     }
 	
-	public void setValues(Element[] values) { this.values = values; }
-	protected String toString(ElementType parentType, boolean isLaTeX, String[] values) {
+	public void setValues(Element[] values) { this.values = List.of(values); }
+	public String toString(ElementType parentType, StringSettings settings, String[] values) {
 		
 		String str = StringFormat.arrayStr(values, " + ");
 		
         if (parentType == null || parentType == ElementType.Division || parentType == ElementType.Addition) return str;
-        else return StringFormat.bracket(str, isLaTeX);
+        else return StringFormat.bracket(str, settings.isLaTeX);
 	}
-	public Element clone() { return new Addition(Tools.cloneElementArray(values)); }
+	public Element clone() { return new Addition(Tools.cloneElementArray(getValues())); }
 	public Element clonedSimplify() {
 		
-		ArrayList<Element> newChilds = new ArrayList<>();
-		for (Element child : values)
-		{
-			if (child.getType() == ElementType.Addition)
-				newChilds.addAll(Arrays.asList(child.getValues()));
-			else newChilds.add(child);
+		for (int i = 0; i < values.size(); i++) {
+			if (values.get(i).getType() == ElementType.Addition)
+			{
+				values.addAll(((Addition) values.get(i)).values);
+				values.remove(i);
+			}
 		}
-		values = newChilds.toArray(new Element[newChilds.size()]);
 		
 		Number cste = new Number(0);
 		ElementCoef elemCoef = new ElementCoef();
@@ -105,8 +100,8 @@ public class Addition extends Element{
         if (newValues.size() == 0) return new Number(0);
         else if (newValues.size() == 1) return newValues.get(0);
         
-        values = newValues.toArray(new Element[newValues.size()]);
-        Arrays.sort(values);
+        values = newValues;
+        Collections.sort(values);
         
         return this;
 	}

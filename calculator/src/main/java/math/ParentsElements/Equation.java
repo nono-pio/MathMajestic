@@ -31,11 +31,11 @@ public class Equation extends ParentElement{
             Element[] sequence = getSequences();
 
             Element elementVar = sequence[path[0]];
-            Number value = sequence[1 - path[0]].toValue();
+            Number value = sequence[1 - path[0]].toValue().getImportantValue();
 
             int[] newPath = Arrays.copyOfRange(path, 1, path.length);
 
-            Number result = elementVar.recipFunction(newPath, value).toValue();
+            Number result = elementVar.recipFunction(newPath, value).toValue().getImportantValue();
 
             return new Number[] {result};
         }
@@ -58,7 +58,8 @@ public class Equation extends ParentElement{
     	return dataCurSolve;
     }
 
-    public boolean isTrue() { return rightElement.toValue().isEqual(leftElement.toValue()); }
+    public boolean isTrue()
+    { return rightElement.toValue().getImportantValue().isEqual(leftElement.toValue().getImportantValue()); }
 
     @Override
     public String toString() { return rightElement.toString() + " = " + leftElement.toString(); }
