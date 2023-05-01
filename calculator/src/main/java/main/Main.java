@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Arrays;
-
 import latex.*;
 import math.MathN;
 import math.ParentClass.*;
@@ -21,14 +19,20 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Element add = new Addition(y, z, new Log(a, x));
+		Variable m = new Variable("m");
+		Variable g = new Variable("g", 9.81f);
 		
-		GlobalVariable.setVariable("x", n2);
-		GlobalVariable.setVariable("y", n2);
-		GlobalVariable.setVariable("z", n2);
-		GlobalVariable.setVariable("a", n5);
+		Function force = new Function("F", m, new Product(m, g));
 		
-		print(add);
+		Element F = new Product(n2, m);
+		
+		StringSettings settings = new StringSettings()
+				.setShowFunctionValue(false)
+				.setShowVariableFunction(true)
+				.setShowVariableValue(true);
+		
+		print(force.toString(settings));
+		print(force.of(F).toString(settings));
 		
 		//print("");
 		//element.forEach((e, p) -> print(e.getType() + " : " + e));
@@ -37,6 +41,7 @@ public class Main {
 		
 		//new Frame("Title", latex, 1000, 500, 50);
 	}
+	
 	
 	static <T> void print(T str) { System.out.println(str.toString()); }
 	static void print(String str) { System.out.println(str); }

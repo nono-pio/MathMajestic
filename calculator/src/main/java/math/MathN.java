@@ -25,7 +25,7 @@ public class MathN {
     }
     public static Number product(Number ... numbers)
     {
-    	Number sum = new Number(0);
+    	Number sum = new Number(1);
     	for (int i = 0; i < numbers.length; i++) {
 			sum.mult(numbers[i]);
 		}

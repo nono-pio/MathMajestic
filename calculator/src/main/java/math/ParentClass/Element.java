@@ -3,20 +3,21 @@ package math.ParentClass;
 import java.util.Arrays;
 
 import math.numbers.Number;
+import math.numbers.Variable;
 import math.tools.Position;
 import math.tools.StringSettings;
 
-
 /**
  * 
+ * Element is an abstract class. It represents all the elements of an equation,
+ * number, variable, mathematical operation, ect.
+ * 
  * @author Nolan Piccand
- * @Date 30 avr. 2023
- *
  */
 public abstract class Element implements Comparable<Element> {
 
 	// <--------------- Type ---------------------->
-	
+
 	public abstract ElementType getType();
 
 	// <--------------- Values -------------------->
@@ -49,7 +50,7 @@ public abstract class Element implements Comparable<Element> {
 	}
 
 	public String toLaTeX() {
-		return toString(null, new StringSettings(true));
+		return toString(null, new StringSettings().setLaTeX(true));
 	}
 
 	// <---------------- Math --------------------->
@@ -135,7 +136,7 @@ public abstract class Element implements Comparable<Element> {
 				return false;
 		return true;
 	}
-	
+
 	public int compareTo(Element element2) {
 
 		if (getType() != element2.getType())
@@ -153,6 +154,23 @@ public abstract class Element implements Comparable<Element> {
 		Element[] childs = getValues();
 		for (int i = 0; i < childs.length; i++) {
 			childs[i].forEachChild(func, position.generateNewPosition(getType(), i));
+		}
+	}
+
+	public void replaceVariable(Variable variable, Element replace) {
+		Element[] childs = getValues();
+		boolean hasChange = false;
+
+		for (int i = 0; i < childs.length; i++) {
+			if (childs[i].getType() == ElementType.Variable && childs[i].isEqual(variable)) {
+				childs[i] = replace;
+				hasChange = true;
+			} else
+				childs[i].replaceVariable(variable, replace);
+		}
+
+		if (hasChange) {
+			setValues(childs);
 		}
 	}
 }

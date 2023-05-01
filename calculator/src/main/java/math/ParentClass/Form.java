@@ -3,6 +3,14 @@ package math.ParentClass;
 import math.numbers.Number;
 import math.tools.StringSettings;
 
+/**
+ * Form is a abstract class that extends Element.
+ * Form is used for replace multiple math operation that represent regular mathematical expression as polynome.
+ * 
+ * 
+ * @author Nolan Piccand
+ *
+ */
 public abstract class Form extends Element {
 
 	
