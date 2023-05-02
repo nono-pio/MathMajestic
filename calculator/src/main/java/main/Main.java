@@ -1,6 +1,8 @@
 package main;
 
 import latex.*;
+
+import math.set.*;
 import math.MathN;
 import math.ParentClass.*;
 import math.ParentClass.Element.NumberResponse;
@@ -11,6 +13,7 @@ import math.forms.Polynome;
 import math.numbers.GlobalVariable;
 import math.numbers.Number;
 import math.numbers.Variable;
+import math.set.SetNumber;
 import math.string_converter.StringConverter;
 import math.tools.StringSettings;
 
@@ -19,20 +22,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Variable m = new Variable("m");
-		Variable g = new Variable("g", 9.81f);
-		
-		Function force = new Function("F", m, new Product(m, g));
-		
-		Element F = new Product(n2, m);
-		
-		StringSettings settings = new StringSettings()
-				.setShowFunctionValue(false)
-				.setShowVariableFunction(true)
-				.setShowVariableValue(true);
-		
-		print(force.toString(settings));
-		print(force.of(F).toString(settings));
+		Set set = new Set(SetNumber.Natural, 1, 2, 3);
+		print(set.inRange(4));
 		
 		//print("");
 		//element.forEach((e, p) -> print(e.getType() + " : " + e));
