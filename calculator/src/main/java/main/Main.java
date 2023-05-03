@@ -3,6 +3,7 @@ package main;
 import latex.*;
 
 import math.set.*;
+import math.MathFlag;
 import math.MathN;
 import math.ParentClass.*;
 import math.ParentClass.Element.NumberResponse;
@@ -10,6 +11,7 @@ import math.ParentsElements.AritmeticSequence;
 import math.ParentsElements.Equation;
 import math.elements.*;
 import math.forms.Polynome;
+import math.math.Fraction;
 import math.numbers.GlobalVariable;
 import math.numbers.Number;
 import math.numbers.Variable;
@@ -21,9 +23,20 @@ import math.tools.StringSettings;
 public class Main {
 
 	public static void main(String[] args) {
-
-		Set set = new Set(SetNumber.Natural, 1, 2, 3);
-		print(set.inRange(4));
+		
+		Set set = new Set(
+				new Ensemble(-5, 5),
+				new Ensemble(6, 10),
+				new Ensemble(12, 29),
+				new Ensemble(-30, -6)
+				);
+		
+		Ensemble ens = new Ensemble(MathFlag.Negative);
+		
+		print(set);
+		set.complement();
+		set.complement();
+		print(set);
 		
 		//print("");
 		//element.forEach((e, p) -> print(e.getType() + " : " + e));

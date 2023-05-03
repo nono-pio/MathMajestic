@@ -2,8 +2,8 @@ package math.set;
 
 import math.MathFlag;
 
-public class Ensemble extends IEnsemble {
-
+public class Ensemble implements Comparable<Ensemble>{
+	
 	boolean startInclude = true;
 	float start;
 	
@@ -12,6 +12,7 @@ public class Ensemble extends IEnsemble {
 
 	public Ensemble(MathFlag flag)
 	{
+		
 		if (flag == MathFlag.InfinitySet)
 		{
 			this.startInclude = false;
@@ -38,13 +39,11 @@ public class Ensemble extends IEnsemble {
 	}
 	
 	public Ensemble(float start, float end) {
-		super();
 		this.start = start;
 		this.end = end;
 	}
 
 	public Ensemble(boolean startInclude, float start, boolean endInclude, float end) {
-		super();
 		this.startInclude = startInclude;
 		this.start = start;
 		this.endInclude = endInclude;
@@ -52,14 +51,12 @@ public class Ensemble extends IEnsemble {
 	}
 	
 	public Ensemble(boolean startInclude, float start, float end) {
-		super();
 		this.startInclude = startInclude;
 		this.start = start;
 		this.end = end;
 	}
 	
 	public Ensemble(float start, boolean endInclude, float end) {
-		super();
 		this.start = start;
 		this.endInclude = endInclude;
 		this.end = end;
@@ -82,12 +79,36 @@ public class Ensemble extends IEnsemble {
 		return isBigger && isSmaller;
 		
 	}
+	
+	public Ensemble intersection(Ensemble ensemble)
+	{
+		
+		float start = Math.max(min(), ensemble.min());
+		float end = Math.min(max(), ensemble.max());
+		
+		if (start <= end) return new Ensemble(start, end);
+		
+		return null;
+	}
 
 	@Override
 	public String toString() {
+		
+		if (min() == max()) return String.valueOf(start);
+		
 		String startS = startInclude ? "[" + start :  "]" + start;
 		String endS = endInclude ? end + "]" : end + "[" ;
 		return startS + "; " + endS;
 	}
-
+	
+	public int compareTo(Ensemble ensemble) {
+		
+		if (ensemble.min() < min() && ensemble.max() < max())
+			return 1;
+		else if (ensemble.min() > min() && ensemble.max() > max())
+			return -1;
+		else
+			return 0;
+		
+	}
 }
