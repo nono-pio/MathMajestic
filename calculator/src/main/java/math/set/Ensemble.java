@@ -63,8 +63,10 @@ public class Ensemble implements Comparable<Ensemble>{
 	}
 
 	public float min() { return start; }
-
+	public boolean minInclude() { return startInclude; }
+	
 	public float max() { return end; }
+	public boolean maxInclude() { return endInclude; }
 
 	public boolean inRange(float value) {
 		
@@ -89,6 +91,11 @@ public class Ensemble implements Comparable<Ensemble>{
 		if (start <= end) return new Ensemble(start, end);
 		
 		return null;
+	}
+	
+	public Ensemble clone()
+	{
+		return new Ensemble(startInclude, start, endInclude, end);
 	}
 
 	@Override

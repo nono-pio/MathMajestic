@@ -24,19 +24,21 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Set set = new Set(
-				new Ensemble(-5, 5),
+		Set A = new Set(
+				new Ensemble(false, -5, 5),
 				new Ensemble(6, 10),
 				new Ensemble(12, 29),
-				new Ensemble(-30, -6)
+				new Ensemble(-30, false, -6)
 				);
 		
-		Ensemble ens = new Ensemble(MathFlag.Negative);
+		Set B = new Set(
+				new Ensemble(MathFlag.Negative)
+				);
 		
-		print(set);
-		set.complement();
-		set.complement();
-		print(set);
+		print(A);
+		print(B);
+		A.union(B);
+		print(A);
 		
 		//print("");
 		//element.forEach((e, p) -> print(e.getType() + " : " + e));

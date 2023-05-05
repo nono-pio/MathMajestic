@@ -5,7 +5,6 @@ import java.util.List;
 import math.MathFlag;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 public class Set {
@@ -50,59 +49,118 @@ public class Set {
 	}
 
 	public void complement() {
-		
+
 		float start = Float.NEGATIVE_INFINITY;
+		boolean startInclude = false;
 
 		List<Ensemble> newValues = new ArrayList<Ensemble>();
-		
+
 		for (Ensemble ensemble : values) {
-			newValues.add(new Ensemble(start, ensemble.min()));
+			newValues.add(new Ensemble(startInclude, start, !ensemble.minInclude(), ensemble.min()));
 			start = ensemble.max();
+			startInclude = !ensemble.maxInclude();
 		}
-		
-		newValues.add(new Ensemble(start, Float.POSITIVE_INFINITY));
-		
+
+		newValues.add(new Ensemble(startInclude, start, false, Float.POSITIVE_INFINITY));
+
 		values = newValues;
-		
+
+	}
+
+	public void union(Set set) {
+		for (Ensemble ensemble : set.values) {
+			union(ensemble);
+		}
 	}
 
 	public void union(Ensemble ensemble) {
 
-		/*
-		 * List = [3,4] U [5,6] U [10, +inf[
-		 * 
-		 * List U [a, b]
-		 * 
-		 */
-
 		int indexStart = -1;
 		int indexEnd = -1;
+		
+		boolean ensMinInclude = ensemble.minInclude();
+		float ensMin = ensemble.min();
+		boolean ensMaxInclude = ensemble.maxInclude();
+		float ensMax = ensemble.max();
+		
+		boolean minInclude = true;
+		boolean maxInclude = true;
 
 		for (int i = 0; i < values.size(); i++) {
 
-			if (values.get(i).max() >= ensemble.min() && indexStart == -1) {
-				indexStart = i;
+			Ensemble curEns = values.get(i);
+			float curMin = curEns.min();
+			float curMax = curEns.max();
+			
+			if (indexStart == -1)
+			{
+				if (ensMin < curMax)
+				{
+					indexStart = i;
+					minInclude = curEns.minInclude();
+					
+				} else if (ensMin == curMax && (curEns.maxInclude() || ensMinInclude) )
+				{
+					indexStart = i;
+					minInclude = curEns.minInclude();
+				}
 			}
-
-			if (values.get(i).min() > ensemble.max()) {
-				indexEnd = i - 1;
-				break;
+			
+			if (curMin < ensMax)
+			{
+				indexEnd = i;
+				maxInclude = curEns.maxInclude();
+				
+			} else if (curMin == ensMax && (curEns.minInclude() || ensMaxInclude))
+			{
+				indexEnd = i;
+				maxInclude = curEns.maxInclude();
 			}
+			else break;
 		}
 
 		if (indexEnd == -1)
 			indexEnd = values.size() - 1;
+		
+		float min;
+		float max;
+		
+		if (ensMin < values.get(indexStart).min())
+		{
+			minInclude = ensMinInclude;
+			min = ensMin;
+		} else
+			min = values.get(indexStart).min();
+		
+		if (ensMax > values.get(indexEnd).max())
+		{
+			maxInclude = ensMaxInclude;
+			max = ensMax;
+		} else
+			max = values.get(indexEnd).max();
+		
+		Ensemble ens = new Ensemble(minInclude, min, maxInclude, max);
 
-		System.out.println("index = " + indexStart + " / " + indexEnd);
-
-		Ensemble ens = new Ensemble(Math.min(values.get(indexStart).min(), ensemble.min()),
-				Math.max(values.get(indexEnd).max(), ensemble.max()));
-
-		for (int i = indexEnd; i > indexStart; i--) {
+		for (int i = indexEnd; i >= indexStart; i--) {
 			values.remove(i);
 		}
 
-		values.set(indexStart, ens);
+		values.add(indexStart, ens);
+	}
+
+	public void intersection(Set set) {
+
+		List<Ensemble> newValues = new ArrayList<Ensemble>();
+
+		for (Ensemble ensemble : set.values) {
+
+			newValues.addAll(getIntersection(values, ensemble));
+
+		}
+
+		values = newValues;
+
+		Collections.sort(values);
 	}
 
 	public void intersection(Ensemble ensemble) {
@@ -117,12 +175,45 @@ public class Set {
 		}
 	}
 
+	public static List<Ensemble> getIntersection(List<Ensemble> A, Ensemble B) {
+
+		List<Ensemble> result = new ArrayList<Ensemble>();
+
+		for (int i = A.size() - 1; i >= 0; i--) {
+
+			Ensemble ens = B.intersection(A.get(i));
+
+			if (ens != null)
+				result.add(ens);
+		}
+
+		return result;
+	}
+
+	public void difference(Set B) {
+
+		B.complement();
+		intersection(B);
+
+	}
+
 	public void difference(Ensemble ensemble) {
+		difference(new Set(ensemble));
+	}
+
+	public void symmetricDifference(Set B) {
+
+		Set A = clone();
+		A.intersection(B);
+		A.complement();
+
+		union(B);
+		intersection(A);
 
 	}
 
 	public void symmetricDifference(Ensemble ensemble) {
-
+		symmetricDifference(new Set(ensemble));
 	}
 
 	// <------- Other Function -------->
@@ -137,6 +228,17 @@ public class Set {
 			str.append(" U ").append(values.get(i));
 		}
 		return str.toString();
+	}
+
+	public Set clone() {
+
+		Ensemble[] clonedValues = new Ensemble[values.size()];
+
+		for (int i = 0; i < values.size(); i++) {
+			clonedValues[i] = values.get(i).clone();
+		}
+
+		return new Set(clonedValues);
 	}
 
 }
