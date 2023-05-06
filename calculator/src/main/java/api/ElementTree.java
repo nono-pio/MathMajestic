@@ -2,11 +2,11 @@ package api;
 
 import java.util.HashMap;
 
-import math.ParentClass.Element;
-import math.ParentClass.ElementType;
-import math.numbers.Variable;
+import math.element.Element;
+import math.element.ElementType;
+import math.element.primary.Number;
+import math.element.primary.Variable;
 import math.tools.StringSettings;
-import math.numbers.Number;
 
 public class ElementTree {
 

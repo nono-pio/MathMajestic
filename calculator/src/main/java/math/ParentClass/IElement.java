@@ -1,5 +1,6 @@
 package math.ParentClass;
 
+import math.element.Element;
 import math.tools.Position;
 
 @FunctionalInterface

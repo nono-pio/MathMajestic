@@ -73,16 +73,20 @@ public class Set {
 		}
 	}
 
+	public void union(float value) {
+		union(new Ensemble(value));
+	}
+
 	public void union(Ensemble ensemble) {
 
 		int indexStart = -1;
 		int indexEnd = -1;
-		
+
 		boolean ensMinInclude = ensemble.minInclude();
 		float ensMin = ensemble.min();
 		boolean ensMaxInclude = ensemble.maxInclude();
 		float ensMax = ensemble.max();
-		
+
 		boolean minInclude = true;
 		boolean maxInclude = true;
 
@@ -91,54 +95,47 @@ public class Set {
 			Ensemble curEns = values.get(i);
 			float curMin = curEns.min();
 			float curMax = curEns.max();
-			
-			if (indexStart == -1)
-			{
-				if (ensMin < curMax)
-				{
+
+			if (indexStart == -1) {
+				if (ensMin < curMax) {
 					indexStart = i;
 					minInclude = curEns.minInclude();
-					
-				} else if (ensMin == curMax && (curEns.maxInclude() || ensMinInclude) )
-				{
+
+				} else if (ensMin == curMax && (curEns.maxInclude() || ensMinInclude)) {
 					indexStart = i;
 					minInclude = curEns.minInclude();
 				}
 			}
-			
-			if (curMin < ensMax)
-			{
+
+			if (curMin < ensMax) {
 				indexEnd = i;
 				maxInclude = curEns.maxInclude();
-				
-			} else if (curMin == ensMax && (curEns.minInclude() || ensMaxInclude))
-			{
+
+			} else if (curMin == ensMax && (curEns.minInclude() || ensMaxInclude)) {
 				indexEnd = i;
 				maxInclude = curEns.maxInclude();
-			}
-			else break;
+			} else
+				break;
 		}
 
 		if (indexEnd == -1)
 			indexEnd = values.size() - 1;
-		
+
 		float min;
 		float max;
-		
-		if (ensMin < values.get(indexStart).min())
-		{
+
+		if (ensMin < values.get(indexStart).min()) {
 			minInclude = ensMinInclude;
 			min = ensMin;
 		} else
 			min = values.get(indexStart).min();
-		
-		if (ensMax > values.get(indexEnd).max())
-		{
+
+		if (ensMax > values.get(indexEnd).max()) {
 			maxInclude = ensMaxInclude;
 			max = ensMax;
 		} else
 			max = values.get(indexEnd).max();
-		
+
 		Ensemble ens = new Ensemble(minInclude, min, maxInclude, max);
 
 		for (int i = indexEnd; i >= indexStart; i--) {

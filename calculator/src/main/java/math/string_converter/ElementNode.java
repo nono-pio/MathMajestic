@@ -3,7 +3,7 @@ package math.string_converter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import math.ParentClass.Element;
+import math.element.Element;
 
 public class ElementNode {
 

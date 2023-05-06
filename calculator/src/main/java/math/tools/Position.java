@@ -1,6 +1,6 @@
 package math.tools;
 
-import math.ParentClass.ElementType;
+import math.element.ElementType;
 
 public class Position {
 

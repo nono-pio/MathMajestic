@@ -1,7 +1,7 @@
 package math.string_converter;
 
-import math.ParentClass.Element;
-import math.elements.*;
+import math.element.Element;
+import math.element.elements.*;
 
 public enum PriorityOperator {
 

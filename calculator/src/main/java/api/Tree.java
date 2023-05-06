@@ -1,6 +1,6 @@
 package api;
 
-import math.ParentClass.Element;
+import math.element.Element;
 import math.tools.StringSettings;
 
 public class Tree {

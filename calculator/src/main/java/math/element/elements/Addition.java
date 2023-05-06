@@ -1,4 +1,4 @@
-package math.elements;
+package math.element.elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import math.MathN;
-import math.ParentClass.Element;
-import math.ParentClass.ElementType;
-import math.numbers.Number;
+import math.element.Element;
+import math.element.ElementType;
+import math.element.primary.Number;
 import math.tools.StringFormat;
 import math.tools.StringSettings;
 import math.tools.Tools;

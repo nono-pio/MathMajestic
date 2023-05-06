@@ -3,9 +3,9 @@ package math.string_converter;
 import java.util.ArrayList;
 
 import math.tools.ErrorMessage;
-import math.ParentClass.Element;
-import math.numbers.Number;
-import math.numbers.Variable;
+import math.element.Element;
+import math.element.primary.Number;
+import math.element.primary.Variable;
 
 public class StringConverter {
 

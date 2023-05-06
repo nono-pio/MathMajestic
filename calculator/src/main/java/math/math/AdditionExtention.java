@@ -3,11 +3,11 @@ package math.math;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import math.ParentClass.Element;
-import math.elements.Addition;
-import math.elements.Power;
-import math.elements.Product;
-import math.numbers.Number;
+import math.element.Element;
+import math.element.elements.Addition;
+import math.element.elements.Power;
+import math.element.elements.Product;
+import math.element.primary.Number;
 
 public final class AdditionExtention {
 

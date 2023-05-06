@@ -2,7 +2,7 @@ package math.tools;
 
 import java.util.Arrays;
 
-import math.ParentClass.Element;
+import math.element.Element;
 
 public final class Tools {
 	

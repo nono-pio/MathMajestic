@@ -1,16 +1,20 @@
-package math.numbers;
+package math.element.primary;
 
-import java.util.HashMap;
-
-import math.ParentClass.Element;
-import math.ParentClass.ElementType;
+import math.element.Element;
+import math.element.ElementType;
+import math.element.PrimaryElement;
+import math.numbers.GlobalVariable;
+import math.numbers.VariableData;
+import math.numbers.Variables;
 import math.tools.ErrorMessage;
 import math.tools.StringSettings;
 
-public class Variable extends Element {
+public class Variable extends PrimaryElement {
 
 	public String variable;
 	public VariableData variableData;
+
+	// <------------ Constructor ------------>
 
 	public Variable(String variable) {
 		this.variable = variable;
@@ -32,50 +36,19 @@ public class Variable extends Element {
 		variableData = data;
 	}
 
+	// <----------------- Type -------------->
+
 	public ElementType getType() {
 		return ElementType.Variable;
 	}
 
-	public Number toValue(Number[] values) {
-		if (variableData == null || variableData.value == null)
-			throw ErrorMessage.VariableNotSet(variable);
-		return variableData.value;
-	}
-
-	public Element[] getValues() {
-		return new Element[0];
-	}
-
-	public Number reciprocal(int[] path, Number value) {
-		if (path.length == 0)
-			return value;
-		else
-			throw ErrorMessage.NumberRecip();
-	}
-
-	public Element recipFunction(int[] path, Element curRecip) {
-		return curRecip;
-	}
+	// <---------------- Values ------------->
 
 	public Element clone() {
 		return new Variable(variable, variableData);
 	}
 
-	@Override
-	public boolean isEqual(Element elem) {
-		return elem.getType() == ElementType.Variable && variable == ((Variable) elem).variable;
-	}
-
-	@Override
-	public int compareTo(Element element2) {
-		if (element2.getType() != getType())
-			return getType().compareTo(element2.getType());
-		Variable var = (Variable) element2;
-		return variable.compareTo(var.variable);
-	}
-
-	public void setValues(Element[] values) {
-	}
+	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {
 		if (settings.showVariableValue && variableData.value != null)
@@ -83,20 +56,37 @@ public class Variable extends Element {
 		return variable;
 	}
 
-	public void setVariable(HashMap<String, VariableData> variables, int[] curPath, Number value) {
-		variableData = GlobalVariable.setVariable(variable, null, variables);
+	// <--------------- Math ---------------->
+
+	public Element recipFunction(int[] path, Element curRecip) {
+		return curRecip;
+	}
+
+	// <---------------- ToValue ------------>
+
+	public Number toValue(Number[] values) {
+		if (variableData == null || variableData.value == null)
+			throw ErrorMessage.VariableNotSet(variable);
+		return variableData.value;
+	}
+
+	// <---------- Other Function ------------>
+
+	public boolean isEqual(Element elem) {
+		return elem.getType() == ElementType.Variable && variable == ((Variable) elem).variable;
+	}
+
+	public int compareTo(Element element2) {
+		if (element2.getType() != getType())
+			return getType().compareTo(element2.getType());
+		Variable var = (Variable) element2;
+		return variable.compareTo(var.variable);
+	}
+
+	public void setVariable(Variables variables, int[] curPath, Number value) {
+		variableData = variables.setVariable(variable);
 		variableData.paths.add(curPath.clone());
 		variableData.variableCount = variableData.paths.size();
 		variableData.value = value;
 	}
-
-	public Element clonedSimplify() {
-		return this;
-	}
-
-	@Override
-	public Element simplify() {
-		return clone();
-	}
-
 }

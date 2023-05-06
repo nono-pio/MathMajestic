@@ -2,11 +2,11 @@ package math.tools;
 
 import java.util.ArrayList;
 
-import math.ParentClass.Element;
-import math.ParentClass.ElementType;
-import math.elements.Power;
-import math.elements.Product;
-import math.numbers.Number;
+import math.element.Element;
+import math.element.ElementType;
+import math.element.elements.Power;
+import math.element.elements.Product;
+import math.element.primary.Number;
 
 
 public class ElementCoef {

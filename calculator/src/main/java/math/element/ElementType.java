@@ -1,4 +1,4 @@
-package math.ParentClass;
+package math.element;
 
 /**
  * 
@@ -10,8 +10,6 @@ package math.ParentClass;
 public enum ElementType {
     Number,
     Variable,
-    
-    Form,
     
     Function,
 

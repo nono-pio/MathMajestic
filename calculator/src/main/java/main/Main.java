@@ -6,15 +6,14 @@ import math.set.*;
 import math.MathFlag;
 import math.MathN;
 import math.ParentClass.*;
-import math.ParentClass.Element.NumberResponse;
-import math.ParentsElements.AritmeticSequence;
-import math.ParentsElements.Equation;
-import math.elements.*;
+import math.element.Element;
+import math.element.Element.NumberResponse;
+import math.element.elements.*;
+import math.element.primary.Number;
+import math.element.primary.Variable;
 import math.forms.Polynome;
 import math.math.Fraction;
 import math.numbers.GlobalVariable;
-import math.numbers.Number;
-import math.numbers.Variable;
 import math.set.SetNumber;
 import math.string_converter.StringConverter;
 import math.tools.StringSettings;
@@ -24,21 +23,15 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Set A = new Set(
-				new Ensemble(false, -5, 5),
-				new Ensemble(6, 10),
-				new Ensemble(12, 29),
-				new Ensemble(-30, false, -6)
+		Element polynome = new Addition(
+				x,
+				new Product(n1, n5, new Division(n2, x))
 				);
 		
-		Set B = new Set(
-				new Ensemble(MathFlag.Negative)
-				);
 		
-		print(A);
-		print(B);
-		A.union(B);
-		print(A);
+		print(polynome.isEqual(polynome.simplify()));
+		
+		
 		
 		//print("");
 		//element.forEach((e, p) -> print(e.getType() + " : " + e));
@@ -66,9 +59,4 @@ public class Main {
 	static Number n10 = new Number(10);
 	static Number n20 = new Number(20);
 	static Number n50 = new Number(50);
-	
-	static Element pythagoreP1 = new Power(a, n2);
-	static Element pythagoreP2 = new Addition(new Power(b, n2), new Power(c, n2));
-	
-	static Equation pythagore = new Equation(pythagoreP1, pythagoreP2);
 }

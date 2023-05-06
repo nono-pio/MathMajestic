@@ -1,12 +1,12 @@
 /**
  * 
  */
-package math.elements;
+package math.element.elements;
 
-import math.ParentClass.Element;
-import math.ParentClass.ElementType;
-import math.numbers.Number;
-import math.numbers.Variable;
+import math.element.Element;
+import math.element.ElementType;
+import math.element.primary.Number;
+import math.element.primary.Variable;
 import math.tools.StringFormat;
 import math.tools.StringSettings;
 

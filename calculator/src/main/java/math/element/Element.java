@@ -1,9 +1,10 @@
-package math.ParentClass;
+package math.element;
 
 import java.util.Arrays;
 
-import math.numbers.Number;
-import math.numbers.Variable;
+import math.ParentClass.IElement;
+import math.element.primary.Number;
+import math.element.primary.Variable;
 import math.tools.Position;
 import math.tools.StringSettings;
 
@@ -172,5 +173,15 @@ public abstract class Element implements Comparable<Element> {
 		if (hasChange) {
 			setValues(childs);
 		}
+	}
+	
+	public boolean containVariable(String variable)
+	{
+		if (getType() == ElementType.Variable) return isEqual(new Variable(variable));
+		
+		for (Element child : getValues()) {
+			if (child.containVariable(variable)) return true;
+		}
+		return false;
 	}
 }

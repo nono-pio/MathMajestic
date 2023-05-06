@@ -1,7 +1,7 @@
 package math.tools;
 
-import math.ParentClass.Element;
-import math.ParentClass.ElementType;
+import math.element.Element;
+import math.element.ElementType;
 
 public final class StringFormat {
 	

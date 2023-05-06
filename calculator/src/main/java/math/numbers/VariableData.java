@@ -2,6 +2,8 @@ package math.numbers;
 
 import java.util.ArrayList;
 
+import math.element.primary.Number;
+
 public class VariableData {
 
     public int variableCount;

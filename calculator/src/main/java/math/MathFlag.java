@@ -12,6 +12,15 @@ public enum MathFlag {
 	NonZero,
 	Zero,
 	Infinity,
-	NegativeInfivity
+	NegativeInfivity,
+	
+	// <------- Type of child element -------->
+	Term, // Term + Term
+	Factor, // factor * factor
+	Denominator, // 4/denominator
+	BasePower, //base^2
+	BaseLogarithm, //log_baselog(x)
+	Exponent,  // 2^Exponent
+	AntiLogarithm, // log( AntiLogarithm )
 
 }
