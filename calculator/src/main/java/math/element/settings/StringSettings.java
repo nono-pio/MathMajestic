@@ -1,4 +1,4 @@
-package math.tools;
+package math.element.settings;
 
 public class StringSettings {
 

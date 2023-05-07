@@ -3,7 +3,8 @@ package math.element.primary;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.PrimaryElement;
-import math.tools.StringSettings;
+import math.element.settings.DerivativeSettings;
+import math.element.settings.StringSettings;
 
 public class Number extends PrimaryElement {
 
@@ -65,7 +66,13 @@ public class Number extends PrimaryElement {
 	public Element clone() {
 		return new Number(value);
 	}
+	
+	// <---------------- Math --------------->
 
+	public Element derivative(DerivativeSettings settings) {
+		return zero;
+	}
+	
 	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {

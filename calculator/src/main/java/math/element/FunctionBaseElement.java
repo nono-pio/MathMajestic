@@ -1,8 +1,9 @@
 package math.element;
 
 import math.tools.StringFormat;
-import math.tools.StringSettings;
 import math.element.primary.Number;
+import math.element.settings.DerivativeSettings;
+import math.element.settings.StringSettings;
 
 public abstract class FunctionBaseElement extends Element {
 
@@ -72,6 +73,12 @@ public abstract class FunctionBaseElement extends Element {
 	public abstract Element recipFunctionXValue(Element y);
 
 	public abstract Element clonedSimplify();
+	
+	public abstract Element derivative(Element value, Element base);
+	
+	public Element derivative(DerivativeSettings settings) {
+		return derivative(value.derivative(settings), base.derivative(settings));
+	}
 
 	// <---------------- ToValue ------------>
 

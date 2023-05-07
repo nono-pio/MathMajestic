@@ -2,81 +2,54 @@ package math.element.elements;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.primary.Number;
+import math.element.settings.DerivativeSettings;
+import math.element.settings.StringSettings;
 import math.math.AdditionExtention;
 import math.tools.StringFormat;
-import math.tools.StringSettings;
 import math.tools.Tools;
 import math.tools.ElementCoef;
 
 public class Product extends Element {
 
-	public Element[] values;
+	public List<Element> values;
 
-	public Product(Element[] values) {
+	// <------------ Constructor ------------>
+
+	public Product(Element... values) {
+		this.values = List.of(values);
+	}
+
+	public Product(List<Element> values) {
 		this.values = values;
 	}
 
-	public Product(Element value1, Element value2) {
-		this.values = new Element[] { value1, value2 };
-	}
-
-	public Product(Element value1, Element value2, Element value3) {
-		this.values = new Element[] { value1, value2, value3 };
-	}
+	// <----------------- Type -------------->
 
 	public ElementType getType() {
 		return ElementType.Product;
 	}
 
-	public Number toValue(Number[] values) {
-		return MathN.product(values);
-	}
+	// <---------------- Values ------------->
 
 	public Element[] getValues() {
-		return values;
-	}
-
-	public Element recipFunction(int[] path, Element curRecip) {
-
-		Element[] div = new Element[values.length - 1];
-		int index = 0;
-		for (int i = 0; i < values.length; i++) {
-			if (i != path[0]) {
-				div[index] = values[i];
-				index++;
-			}
-		}
-
-		return values[path[0]].recipFunction(newPath(path), new Division(curRecip, new Product(div)));
-	}
-
-	public Number getCst() {
-		for (Element element : values) {
-			if (element.getType() == ElementType.Number)
-				return (Number) element;
-		}
-		return new Number(1);
-	}
-
-	public Element getRest() {
-		ArrayList<Element> rest = new ArrayList<Element>();
-		for (Element element : values) {
-			if (element.getType() != ElementType.Number)
-				rest.add(element);
-		}
-		if (rest.size() == 1)
-			return rest.get(0);
-		return new Product(rest.toArray(new Element[rest.size()]));
+		return values.toArray(new Element[values.size()]);
 	}
 
 	public void setValues(Element[] values) {
-		this.values = values;
+		this.values = List.of(values);
 	}
+
+	public Element clone() {
+		return new Product(Tools.cloneElementArray(getValues()));
+	}
+
+	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {
 
@@ -88,8 +61,20 @@ public class Product extends Element {
 			return StringFormat.bracket(str, settings.isLaTeX);
 	}
 
-	public Element clone() {
-		return new Product(Tools.cloneElementArray(values));
+	// <--------------- Math ---------------->
+
+	public Element recipFunction(int[] path, Element curRecip) {
+
+		Element[] div = new Element[values.size() - 1];
+		int index = 0;
+		for (int i = 0; i < values.size(); i++) {
+			if (i != path[0]) {
+				div[index] = values.get(i);
+				index++;
+			}
+		}
+
+		return values.get(path[0]).recipFunction(newPath(path), new Division(curRecip, new Product(div)));
 	}
 
 	public Element clonedSimplify() {
@@ -101,7 +86,7 @@ public class Product extends Element {
 			else
 				newChilds.add(child);
 		}
-		values = newChilds.toArray(new Element[newChilds.size()]);
+		values = newChilds;
 
 		// arrange child
 		Number cste = new Number(1);
@@ -153,4 +138,70 @@ public class Product extends Element {
 				.simplify();
 	}
 
+	public Element derivative(DerivativeSettings settings) {
+
+		Element cste = getCst();
+		int isCste = cste.isEqual(new Number(1)) ? 0 : 1;
+		Element[] var = getRestList();
+		
+		Element[] derivative = new Element[var.length];
+
+		for (int i = 0; i < var.length; i++) {
+
+			Element[] pro = new Element[var.length + isCste];
+
+			if (isCste == 1)
+				pro[0] = cste.clone();
+			
+			for (int j = isCste; j < pro.length; j++) {
+				if (j != i + isCste)
+					pro[j] = var[j - isCste].clone();
+				else
+					pro[j] = var[i].derivative(settings);
+			}
+
+			if (pro.length > 1)
+				derivative[i] = new Product(pro);
+			else 
+				derivative[i] = pro[0];
+		}
+
+		if (derivative.length > 1)
+			return new Addition(derivative);
+		else 
+			return derivative[0];
+	}
+
+	// <---------------- ToValue ------------>
+
+	public Number toValue(Number[] values) {
+		return MathN.product(values);
+	}
+
+	// <----------- Other Function ---------->
+
+	public Number getCst() {
+		Number cst = new Number(1);
+		for (Element element : values) {
+			if (element.getType() == ElementType.Number)
+				cst.mult((Number) element);;
+		}
+		return cst;
+	}
+
+	public Element getRest() {
+		Element[] rest = getRestList();
+		if (rest.length == 1)
+			return rest[0];
+		return new Product(rest);
+	}
+	
+	public Element[] getRestList() {
+		List<Element> rest = new ArrayList<Element>();
+		for (Element element : values) {
+			if (element.getType() != ElementType.Number)
+				rest.add(element);
+		}
+		return rest.toArray(new Element[rest.size()]);
+	}
 }

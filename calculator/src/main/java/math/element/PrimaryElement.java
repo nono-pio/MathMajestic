@@ -1,7 +1,8 @@
 package math.element;
 
-import math.tools.StringSettings;
 import math.element.primary.Number;
+import math.element.settings.DerivativeSettings;
+import math.element.settings.StringSettings;
 import math.tools.ErrorMessage;
 
 public abstract class PrimaryElement extends Element {
@@ -35,6 +36,8 @@ public abstract class PrimaryElement extends Element {
 	public Element clonedSimplify() {
 		return this;
 	}
+	
+	public abstract Element derivative(DerivativeSettings settings);
 
 	// <---------------- ToValue ------------>
 

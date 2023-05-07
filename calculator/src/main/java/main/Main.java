@@ -3,38 +3,37 @@ package main;
 import latex.*;
 
 import math.set.*;
+import math.set.SetNumber;
+
 import math.MathFlag;
 import math.MathN;
-import math.ParentClass.*;
-import math.element.Element;
-import math.element.Element.NumberResponse;
-import math.element.elements.*;
-import math.element.primary.Number;
-import math.element.primary.Variable;
-import math.forms.Polynome;
 import math.math.Fraction;
-import math.numbers.GlobalVariable;
-import math.set.SetNumber;
+
+import math.element.Element;
+import math.element.elements.*;
+import math.element.functions.*;
+import math.element.primary.*;
+import math.element.primary.Number;
+import math.element.settings.*;
+
+import math.forms.*;
 import math.string_converter.StringConverter;
-import math.tools.StringSettings;
+import math.variables.GlobalVariable;
 
 @SuppressWarnings("unused")
 public class Main {
 
 	public static void main(String[] args) {
 		
-		Element polynome = new Addition(
-				x,
-				new Product(n1, n5, new Division(n2, x))
-				);
+		Element element = new Tan(x);
 		
+		Element derivative = element.derivative("x");
 		
-		print(polynome.isEqual(polynome.simplify()));
+		print(element);
+		print(derivative);
 		
-		
-		
-		//print("");
-		//element.forEach((e, p) -> print(e.getType() + " : " + e));
+		print("");
+		derivative.forEach((e, p) -> print(e.getType() + " : " + e));
 		
 		//LaTex latex = new LaTex(pythagore.toLaTeX());
 		

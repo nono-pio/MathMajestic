@@ -8,6 +8,7 @@ package math.element;
  * 
  */
 public enum ElementType {
+	
     Number,
     Variable,
     
@@ -17,5 +18,9 @@ public enum ElementType {
     Product,
     Division,
     Power, 
-    Log
+    Log,
+    
+    Sin,
+    Cos,
+    Tan,
 }

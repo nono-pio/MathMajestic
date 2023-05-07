@@ -1,4 +1,4 @@
-package math.numbers;
+package math.variables;
 
 import math.element.primary.Number;
 

@@ -6,7 +6,7 @@ import math.element.Element;
 import math.element.ElementType;
 import math.element.primary.Number;
 import math.element.primary.Variable;
-import math.tools.StringSettings;
+import math.element.settings.StringSettings;
 
 public class ElementTree {
 

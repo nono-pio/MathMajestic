@@ -1,4 +1,4 @@
-package math.ParentClass;
+package math.element.settings;
 
 import math.element.Element;
 import math.tools.Position;

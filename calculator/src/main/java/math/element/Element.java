@@ -2,11 +2,13 @@ package math.element;
 
 import java.util.Arrays;
 
-import math.ParentClass.IElement;
 import math.element.primary.Number;
 import math.element.primary.Variable;
+import math.element.settings.DerivativeSettings;
+import math.element.settings.IElement;
+import math.element.settings.NumberResponse;
+import math.element.settings.StringSettings;
 import math.tools.Position;
-import math.tools.StringSettings;
 
 /**
  * 
@@ -60,6 +62,12 @@ public abstract class Element implements Comparable<Element> {
 
 	public abstract Element clonedSimplify();
 
+	public abstract Element derivative(DerivativeSettings settings);
+	
+	public Element derivative(String variable) {
+		return derivative(new DerivativeSettings(variable));
+	}
+
 	public Element simplify() {
 		Element cloneElement = clone();
 		Element[] values = cloneElement.getValues();
@@ -94,12 +102,6 @@ public abstract class Element implements Comparable<Element> {
 		}
 
 		return new NumberResponse(toValue(valuesChilds));
-	}
-
-	public record NumberResponse(Number... values) {
-		public Number getImportantValue() {
-			return values[0];
-		}
 	}
 
 	// <---------------- Other Function ----------->
@@ -174,13 +176,14 @@ public abstract class Element implements Comparable<Element> {
 			setValues(childs);
 		}
 	}
-	
-	public boolean containVariable(String variable)
-	{
-		if (getType() == ElementType.Variable) return isEqual(new Variable(variable));
-		
+
+	public boolean containVariable(String variable) {
+		if (getType() == ElementType.Variable)
+			return isEqual(new Variable(variable));
+
 		for (Element child : getValues()) {
-			if (child.containVariable(variable)) return true;
+			if (child.containVariable(variable))
+				return true;
 		}
 		return false;
 	}

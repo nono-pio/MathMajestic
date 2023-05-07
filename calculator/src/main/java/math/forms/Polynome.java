@@ -3,10 +3,8 @@ package math.forms;
 import java.util.List;
 import java.util.ArrayList;
 
-import math.tools.StringSettings;
 import math.element.Element;
 import math.element.ElementType;
-import math.element.elements.Addition;
 import math.element.elements.Division;
 import math.element.elements.Power;
 import math.element.primary.Number;

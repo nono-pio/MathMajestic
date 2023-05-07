@@ -1,12 +1,13 @@
 package math.element;
 
 import math.tools.StringFormat;
-import math.tools.StringSettings;
 import math.element.primary.Number;
+import math.element.settings.DerivativeSettings;
+import math.element.settings.StringSettings;
 
 public abstract class FunctionElement extends Element {
 
-	Element value;
+	public Element value;
 
 	// <------------ Constructor ------------>
 
@@ -57,6 +58,12 @@ public abstract class FunctionElement extends Element {
 	public abstract Element recipFunction(Element y);
 
 	public abstract Element clonedSimplify();
+	
+	public abstract Element derivative(Element value);
+	
+	public Element derivative(DerivativeSettings settings) {
+		return derivative(value.derivative(settings));
+	}
 
 	// <---------------- ToValue ------------>
 

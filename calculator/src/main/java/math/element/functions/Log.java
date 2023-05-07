@@ -4,8 +4,10 @@ import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionBaseElement;
+import math.element.elements.Addition;
 import math.element.elements.Division;
 import math.element.elements.Power;
+import math.element.elements.Product;
 import math.element.primary.Number;
 
 public class Log extends FunctionBaseElement {
@@ -16,7 +18,7 @@ public class Log extends FunctionBaseElement {
 		super(value, MathN.E);
 	}
 
-	public Log(Element value, Element base) {
+	public Log(Element base, Element value) {
 		super(value, base);
 	}
 
@@ -51,7 +53,31 @@ public class Log extends FunctionBaseElement {
 	}
 
 	public Element clonedSimplify() {
+		// TODO
 		return this;
+	}
+	
+	public Element derivative(Element value, Element base) {
+		
+		if (base.isEqual(Number.zero)) {
+			return derivativeValue(value);
+		}
+		
+		if (value.isEqual(Number.zero)) {
+			return derivativeBase(base);
+		}
+		
+		return new Addition(derivativeValue(value), derivativeBase(base));
+	}
+	
+	public Element derivativeValue(Element value) {
+		return new Division(value, new Product(this.value.clone(), new Log(this.base.clone())));
+	}
+	
+	public Element derivativeBase(Element base) {
+		return new Division(
+				new Product(new Number(-1), base, new Log(this.value.clone())),
+				new Product(this.base.clone(), new Power(new Log(this.base.clone()), new Number(2))));
 	}
 
 	// <---------------- ToValue ------------>

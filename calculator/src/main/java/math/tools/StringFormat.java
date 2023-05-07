@@ -1,8 +1,5 @@
 package math.tools;
 
-import math.element.Element;
-import math.element.ElementType;
-
 public final class StringFormat {
 	
 	

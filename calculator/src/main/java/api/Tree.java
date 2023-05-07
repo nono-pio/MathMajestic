@@ -1,7 +1,7 @@
 package api;
 
 import math.element.Element;
-import math.tools.StringSettings;
+import math.element.settings.StringSettings;
 
 public class Tree {
 

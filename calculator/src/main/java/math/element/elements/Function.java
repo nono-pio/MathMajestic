@@ -7,8 +7,9 @@ import math.element.Element;
 import math.element.ElementType;
 import math.element.primary.Number;
 import math.element.primary.Variable;
+import math.element.settings.DerivativeSettings;
+import math.element.settings.StringSettings;
 import math.tools.StringFormat;
-import math.tools.StringSettings;
 
 /**
  * Function is a defined function that represent f(x). 
@@ -75,13 +76,17 @@ public class Function extends Element {
 	// <--------------- Math ---------------->
 	
 	public Element recipFunction(int[] path, Element curRecip) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO
+		return curRecip;
 	}
 
 	public Element clonedSimplify() {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO
+		return this;
+	}
+	
+	public Element derivative(DerivativeSettings settings) {
+		return function.function.clone().derivative(settings);
 	}
 	
 	// <---------------- ToValue ------------>
