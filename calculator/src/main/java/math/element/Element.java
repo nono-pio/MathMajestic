@@ -1,7 +1,12 @@
 package math.element;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.ArrayList;
 
+import math.element.elements.Addition;
+import math.element.elements.Division;
+import math.element.elements.Product;
 import math.element.primary.Number;
 import math.element.primary.Variable;
 import math.element.settings.DerivativeSettings;
@@ -58,12 +63,58 @@ public abstract class Element implements Comparable<Element> {
 
 	// <---------------- Math --------------------->
 
+	public Element add(Element add) {
+		if (add.isEqual(Number.zero))
+			return this;
+		return new Addition(this, add);
+	}
+
+	public Element sub(Element sub) {
+		if (sub.isEqual(Number.zero))
+			return this;
+		return new Addition(this, sub, true);
+	}
+
+	public Element mult(Element pro) {
+		if (pro.isEqual(Number.one))
+			return this;
+		return new Product(pro, this);
+	}
+
+	public Element div(Element div) {
+		if (div.isEqual(Number.one))
+			return this;
+		return new Division(this, div);
+	}
+
 	public abstract Element recipFunction(int[] path, Element curRecip);
 
 	public abstract Element clonedSimplify();
 
-	public abstract Element derivative(DerivativeSettings settings);
-	
+	public abstract Element derivative(DerivativeSettings settings, int index);
+
+	public Element derivative(DerivativeSettings settings) {
+
+		Element[] values = getValues();
+
+		List<Element> ddx = new ArrayList<>();
+		for (int i = 0; i < values.length; i++) {
+
+			if (values[i].containVariable(settings.variable)) {
+
+				ddx.add(derivative(settings, i).mult(values[i].derivative(settings)));
+			}
+		}
+
+		if (ddx.size() == 0)
+			return Number.zero;
+		else if (ddx.size() == 1)
+			return ddx.get(0);
+		else
+			return new Addition(ddx);
+
+	}
+
 	public Element derivative(String variable) {
 		return derivative(new DerivativeSettings(variable));
 	}

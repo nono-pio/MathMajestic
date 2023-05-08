@@ -15,7 +15,7 @@ import math.element.functions.*;
 import math.element.primary.*;
 import math.element.primary.Number;
 import math.element.settings.*;
-
+import math.element.visual.*;
 import math.forms.*;
 import math.string_converter.StringConverter;
 import math.variables.GlobalVariable;
@@ -25,7 +25,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Element element = new Tan(x);
+		Element element = new Ln(x);
 		
 		Element derivative = element.derivative("x");
 		

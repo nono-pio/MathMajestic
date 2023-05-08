@@ -17,12 +17,12 @@ import math.tools.ElementCoef;
 
 public class Product extends Element {
 
-	public List<Element> values;
+	public List<Element> values = new ArrayList<>();
 
 	// <------------ Constructor ------------>
 
 	public Product(Element... values) {
-		this.values = List.of(values);
+		this.values.addAll(List.of(values));
 	}
 
 	public Product(List<Element> values) {
@@ -62,6 +62,12 @@ public class Product extends Element {
 	}
 
 	// <--------------- Math ---------------->
+
+	public Element mult(Element pro) {
+		if (!pro.isEqual(Number.one))
+			values.add(0, pro);
+		return this;
+	}
 
 	public Element recipFunction(int[] path, Element curRecip) {
 
@@ -138,38 +144,14 @@ public class Product extends Element {
 				.simplify();
 	}
 
-	public Element derivative(DerivativeSettings settings) {
+	public Element derivative(DerivativeSettings settings, int index) {
 
-		Element cste = getCst();
-		int isCste = cste.isEqual(new Number(1)) ? 0 : 1;
-		Element[] var = getRestList();
-		
-		Element[] derivative = new Element[var.length];
+		List<Element> elements = new ArrayList<Element>(Arrays.asList(Tools.cloneElementArray(getValues())));
+		elements.remove(index);
 
-		for (int i = 0; i < var.length; i++) {
-
-			Element[] pro = new Element[var.length + isCste];
-
-			if (isCste == 1)
-				pro[0] = cste.clone();
-			
-			for (int j = isCste; j < pro.length; j++) {
-				if (j != i + isCste)
-					pro[j] = var[j - isCste].clone();
-				else
-					pro[j] = var[i].derivative(settings);
-			}
-
-			if (pro.length > 1)
-				derivative[i] = new Product(pro);
-			else 
-				derivative[i] = pro[0];
-		}
-
-		if (derivative.length > 1)
-			return new Addition(derivative);
-		else 
-			return derivative[0];
+		if (elements.size() == 1)
+			return elements.get(0);
+		return new Product(elements);
 	}
 
 	// <---------------- ToValue ------------>
@@ -184,7 +166,8 @@ public class Product extends Element {
 		Number cst = new Number(1);
 		for (Element element : values) {
 			if (element.getType() == ElementType.Number)
-				cst.mult((Number) element);;
+				cst.mult((Number) element);
+			;
 		}
 		return cst;
 	}
@@ -195,7 +178,7 @@ public class Product extends Element {
 			return rest[0];
 		return new Product(rest);
 	}
-	
+
 	public Element[] getRestList() {
 		List<Element> rest = new ArrayList<Element>();
 		for (Element element : values) {

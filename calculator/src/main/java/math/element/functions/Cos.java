@@ -40,8 +40,8 @@ public class Cos extends FunctionElement {
 		return y;
 	}
 
-	public Element derivative(Element value) {
-		return new Product(new Number(-1), value, new Sin(this.value.clone()));
+	public Element derivative() {
+		return new Product(new Number(-1), new Sin(this.value.clone()));
 	}
 	
 	public Element clonedSimplify() {

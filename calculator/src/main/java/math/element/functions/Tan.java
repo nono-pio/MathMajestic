@@ -41,8 +41,8 @@ public class Tan extends FunctionElement {
 		return y;
 	}
 
-	public Element derivative(Element value) {
-		return new Division(value, new Power(new Cos(this.value.clone()), new Number(2)));
+	public Element derivative() {
+		return new Division(new Number(1), new Power(new Cos(this.value.clone()), new Number(2)));
 	}
 	
 	public Element clonedSimplify() {

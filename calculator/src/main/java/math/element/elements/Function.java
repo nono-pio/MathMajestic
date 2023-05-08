@@ -85,8 +85,8 @@ public class Function extends Element {
 		return this;
 	}
 	
-	public Element derivative(DerivativeSettings settings) {
-		return function.function.clone().derivative(settings);
+	public Element derivative(DerivativeSettings settings, int index) {
+		return function.function.clone().derivative(settings, 0);
 	}
 	
 	// <---------------- ToValue ------------>

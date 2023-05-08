@@ -4,7 +4,6 @@ import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionElement;
-import math.element.elements.Product;
 import math.element.primary.Number;
 
 public class Sin extends FunctionElement {
@@ -40,8 +39,8 @@ public class Sin extends FunctionElement {
 		return y;
 	}
 
-	public Element derivative(Element value) {
-		return new Product(value, new Cos(this.value.clone()));
+	public Element derivative() {
+		return new Cos(value.clone());
 	}
 	
 	public Element clonedSimplify() {

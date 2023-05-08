@@ -74,13 +74,14 @@ public class Division extends Element {
 		return this;
 	}
 
-	public Element derivative(DerivativeSettings settings) {
-		
-		Element numeratorDDX = new Addition(
-				new Product(numerator.derivative(settings), denominator.clone()),
-				new Product(new Number(-1), numerator.clone(), denominator.derivative(settings)));
-		
-		return new Division(numeratorDDX, new Power(denominator.clone(), new Number(2)));
+	public Element derivative(DerivativeSettings settings, int index) {
+
+		if (index == 0) {
+			return new Division(new Number(1), denominator.clone());
+		} else
+			return new Division(
+					new Product(new Number(-1), numerator.clone()),
+					new Power(denominator.clone(), new Number(2)));
 	}
 
 	// <---------------- ToValue ------------>

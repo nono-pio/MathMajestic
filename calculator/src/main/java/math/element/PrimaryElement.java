@@ -36,12 +36,15 @@ public abstract class PrimaryElement extends Element {
 	public Element clonedSimplify() {
 		return this;
 	}
-	
+
 	public abstract Element derivative(DerivativeSettings settings);
+
+	public Element derivative(DerivativeSettings settings, int index) {
+		return null;
+	}
 
 	// <---------------- ToValue ------------>
 
 	public abstract Number toValue(Number[] values);
-
 
 }

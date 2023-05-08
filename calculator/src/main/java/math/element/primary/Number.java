@@ -9,7 +9,8 @@ import math.element.settings.StringSettings;
 public class Number extends PrimaryElement {
 
 	public static final Number zero = new Number(0);
-
+	public static final Number one = new Number(1);
+	
 	public float value;
 
 	// <------------ Constructor ------------>

@@ -21,6 +21,11 @@ public class Power extends Element {
 		this.base = base;
 		this.exponent = exponent;
 	}
+	
+	public Power(Element base, float exponent) {
+		this.base = base;
+		this.exponent = new Number(exponent);
+	}
 
 	// <----------------- Type -------------->
 
@@ -103,26 +108,13 @@ public class Power extends Element {
 		return this;
 	}
 
-	public Element derivative(DerivativeSettings settings) {
+	public Element derivative(DerivativeSettings settings, int index) {
 
-		if (!exponent.containVariable(settings.variable)) { // (u^b)' = b * u' * u^b-1
-			return derivativeBase(settings);
-		}
-
-		if (!base.containVariable(settings.variable)) { // (b^u)' = ln(b) * u' * b^u
-			return derivativeExponent(settings);
-		}
-
-		return new Addition(derivativeBase(settings), derivativeExponent(settings));
-	}
-
-	public Element derivativeBase(DerivativeSettings settings) {
-		return new Product(exponent.clone(), base.derivative(settings),
-				new Power(base.clone(), new Addition(exponent.clone(), new Number(-1))));
-	}
-
-	public Element derivativeExponent(DerivativeSettings settings) {
-		return new Product(new Log(base.clone()), exponent.derivative(settings), this.clone());
+		if (index == 0) {
+			return new Product(exponent.clone(),
+					new Power(base.clone(), new Addition(exponent.clone(), new Number(-1))));
+		} else
+			return new Product(new Log(base.clone()), this.clone());
 	}
 
 	// <---------------- ToValue ------------>

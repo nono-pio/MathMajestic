@@ -39,12 +39,12 @@ public abstract class FunctionBaseElement extends Element {
 	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {
-		
+
 		String str = toString(settings, values[0], values[1]);
-		
+
 		if (parentType == ElementType.Power)
 			return StringFormat.bracket(str, settings.isLaTeX);
-		
+
 		return str;
 	}
 
@@ -73,11 +73,17 @@ public abstract class FunctionBaseElement extends Element {
 	public abstract Element recipFunctionXValue(Element y);
 
 	public abstract Element clonedSimplify();
-	
-	public abstract Element derivative(Element value, Element base);
-	
-	public Element derivative(DerivativeSettings settings) {
-		return derivative(value.derivative(settings), base.derivative(settings));
+
+	public abstract Element derivativeBase();
+
+	public abstract Element derivativeValue();
+
+	public Element derivative(DerivativeSettings settings, int index) {
+
+		if (index == 0) {
+			return derivativeValue();
+		} else
+			return derivativeBase();
 	}
 
 	// <---------------- ToValue ------------>

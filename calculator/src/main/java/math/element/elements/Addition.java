@@ -69,6 +69,12 @@ public class Addition extends Element {
 
 	// <--------------- Math ---------------->
 
+	public Element add(Element add) {
+		if (!add.isEqual(Number.zero))
+			values.add(add);
+		return this;
+	}
+
 	public Element recipFunction(int[] path, Element curRecip) {
 
 		Element[] newRecip = new Element[values.size()];
@@ -134,12 +140,8 @@ public class Addition extends Element {
 		return this;
 	}
 
-	public Element derivative(DerivativeSettings settings) {
-		Element[] ddx = new Element[values.size()];
-		for (int i = 0; i < ddx.length; i++) {
-			ddx[i] = values.get(i).derivative(settings);
-		}
-		return new Addition(ddx);
+	public Element derivative(DerivativeSettings settings, int index) {
+		return new Number(1);
 	}
 
 	// <---------------- ToValue ------------>

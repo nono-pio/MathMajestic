@@ -59,10 +59,10 @@ public abstract class FunctionElement extends Element {
 
 	public abstract Element clonedSimplify();
 	
-	public abstract Element derivative(Element value);
+	public abstract Element derivative();
 	
-	public Element derivative(DerivativeSettings settings) {
-		return derivative(value.derivative(settings));
+	public Element derivative(DerivativeSettings settings, int index) {
+		return derivative();
 	}
 
 	// <---------------- ToValue ------------>

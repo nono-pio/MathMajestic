@@ -4,7 +4,6 @@ import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionBaseElement;
-import math.element.elements.Addition;
 import math.element.elements.Division;
 import math.element.elements.Power;
 import math.element.elements.Product;
@@ -57,27 +56,14 @@ public class Log extends FunctionBaseElement {
 		return this;
 	}
 	
-	public Element derivative(Element value, Element base) {
-		
-		if (base.isEqual(Number.zero)) {
-			return derivativeValue(value);
-		}
-		
-		if (value.isEqual(Number.zero)) {
-			return derivativeBase(base);
-		}
-		
-		return new Addition(derivativeValue(value), derivativeBase(base));
+	public Element derivativeValue() {
+		return new Division(new Number(1), new Product(value.clone(), new Log(base.clone())));
 	}
 	
-	public Element derivativeValue(Element value) {
-		return new Division(value, new Product(this.value.clone(), new Log(this.base.clone())));
-	}
-	
-	public Element derivativeBase(Element base) {
+	public Element derivativeBase() {
 		return new Division(
-				new Product(new Number(-1), base, new Log(this.value.clone())),
-				new Product(this.base.clone(), new Power(new Log(this.base.clone()), new Number(2))));
+				new Product(new Number(-1), new Log(value.clone())),
+				new Product(base.clone(), new Power(new Log(base.clone()), new Number(2))));
 	}
 
 	// <---------------- ToValue ------------>
