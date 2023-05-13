@@ -49,7 +49,7 @@ public class ElementCoef {
 		Number coef = coefs.get(index);
 		Element element = elements.get(index);
 		
-		if (coef.isEqual(new Number(1))) return element.clonedSimplify();
+		if (coef.isEqual(new Number(1))) return element;
 		if (element.getType() == ElementType.Product)
 		{
 			Element[] newValues = Tools.addToArray(element.getValues(), coef);
@@ -61,7 +61,7 @@ public class ElementCoef {
 	public Element getElementPower(int index)
 	{
 		if (coefs.get(index).isEqual(new Number(1)))
-			return elements.get(index).clonedSimplify();
+			return elements.get(index);
 		return new Power(elements.get(index), coefs.get(index)).clonedSimplify();
 	}
 	

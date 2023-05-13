@@ -69,9 +69,10 @@ public class Division extends Element {
 		return (path[0] == 0 ? numerator : denominator).recipFunction(newPath(path), newRecip);
 	}
 
-	public Element clonedSimplify() {
-		// TODO
-		return this;
+	@Override
+	public Element develop() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public Element derivative(DerivativeSettings settings, int index) {

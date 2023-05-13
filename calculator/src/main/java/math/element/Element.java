@@ -13,6 +13,7 @@ import math.element.settings.DerivativeSettings;
 import math.element.settings.IElement;
 import math.element.settings.NumberResponse;
 import math.element.settings.StringSettings;
+import math.simplification.Simplify;
 import math.tools.Position;
 
 /**
@@ -86,11 +87,15 @@ public abstract class Element implements Comparable<Element> {
 			return this;
 		return new Division(this, div);
 	}
+	
+	public abstract Element develop();
 
 	public abstract Element recipFunction(int[] path, Element curRecip);
 
-	public abstract Element clonedSimplify();
-
+	public Element simplify() {
+		return new Simplify(this).simplify();
+	}
+	
 	public abstract Element derivative(DerivativeSettings settings, int index);
 
 	public Element derivative(DerivativeSettings settings) {
@@ -117,26 +122,6 @@ public abstract class Element implements Comparable<Element> {
 
 	public Element derivative(String variable) {
 		return derivative(new DerivativeSettings(variable));
-	}
-
-	public Element simplify() {
-		Element cloneElement = clone();
-		Element[] values = cloneElement.getValues();
-
-		boolean isCst = true;
-		Element[] valuesSimplified = new Element[values.length];
-		for (int i = 0; i < values.length; i++) {
-			valuesSimplified[i] = values[i].simplify();
-			if (valuesSimplified[i].getType() != ElementType.Number)
-				isCst = false;
-		}
-
-		cloneElement.setValues(valuesSimplified);
-
-		if (isCst)
-			return cloneElement.toValue().getImportantValue();
-
-		return cloneElement.clonedSimplify();
 	}
 
 	// <--------------- ToValue ------------------->

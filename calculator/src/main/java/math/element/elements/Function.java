@@ -80,8 +80,9 @@ public class Function extends Element {
 		return curRecip;
 	}
 
-	public Element clonedSimplify() {
-		// TODO
+	@Override
+	public Element develop() {
+		// TODO Auto-generated method stub
 		return this;
 	}
 	

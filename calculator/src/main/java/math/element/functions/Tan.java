@@ -45,8 +45,9 @@ public class Tan extends FunctionElement {
 		return new Division(new Number(1), new Power(new Cos(this.value.clone()), new Number(2)));
 	}
 	
-	public Element clonedSimplify() {
-		// TODO
+	@Override
+	public Element develop() {
+		// TODO Auto-generated method stub
 		return this;
 	}
 

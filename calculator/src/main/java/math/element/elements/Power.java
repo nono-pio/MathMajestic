@@ -79,17 +79,17 @@ public class Power extends Element {
 		if (exponent.getType() == ElementType.Number) {
 			Number exp = (Number) exponent;
 			if (exp.isEqual(new Number(1)))
-				return base.clonedSimplify();
+				return base;
 			else if (exp.isEqual(new Number(0)))
 				return new Number(1);
 			else if (exp.isInteger() && base.getType() == ElementType.Addition)
-				return AdditionExtention.Power((Addition) base, exp.toInteger()).simplify();
+				return AdditionExtention.Power((Addition) base, exp.toInteger());
 		}
 
 		if (exponent.getType() == ElementType.Log) {
 			Log exp = (Log) exponent;
 			if (base.isEqual(exp.base))
-				return exp.value.clonedSimplify();
+				return exp.value;
 		}
 
 		if (base.getType() == ElementType.Number) {
@@ -105,6 +105,12 @@ public class Power extends Element {
 			return new Power(bas.base, new Product(exponent, bas.exponent).clonedSimplify()).clonedSimplify();
 		}
 
+		return this;
+	}
+	
+	@Override
+	public Element develop() {
+		// TODO
 		return this;
 	}
 

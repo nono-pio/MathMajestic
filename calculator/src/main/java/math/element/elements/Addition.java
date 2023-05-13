@@ -10,29 +10,30 @@ import math.element.ElementType;
 import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
+import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
 import math.tools.ElementCoef;
 
-public class Addition extends Element {
+public class Addition extends Element implements InfinitElement {
 
 	public List<Element> values;
 
 	// <------------ Constructor ------------>
 
-	public Addition(Element... values) {
-		this.values = List.of(values);
+	public Addition(Element ... values) {
+		this.values = new ArrayList<>(List.of(values));
 	}
 
 	public Addition(Element value1, Element value2, boolean subtract) {
 		if (subtract)
-			this.values = List.of(value1, new Product(new Number(-1), value2));
+			this.values = new ArrayList<>(List.of(value1, new Product(new Number(-1), value2)));
 		else
-			this.values = List.of(value1, value2);
+			this.values = new ArrayList<>(List.of(value1, value2));
 	}
 
 	public Addition(List<Element> values) {
-		this.values = values;
+		this.values = new ArrayList<>(values);
 	}
 
 	// <----------------- Type -------------->
@@ -48,7 +49,7 @@ public class Addition extends Element {
 	}
 
 	public void setValues(Element[] values) {
-		this.values = List.of(values);
+		this.values = new ArrayList<>(List.of(values));
 	}
 
 	public Element clone() {
@@ -123,7 +124,7 @@ public class Addition extends Element {
 		if (elemCoef.size() == 0)
 			return cste;
 		if (elemCoef.size() == 1 && cste.isZero())
-			return elemCoef.getElementProduct(0).clonedSimplify();
+			return elemCoef.getElementProduct(0);
 
 		ArrayList<Element> newValues = elemCoef.getElementsProduct();
 		if (!cste.isZero())
@@ -136,6 +137,28 @@ public class Addition extends Element {
 
 		values = newValues;
 		Collections.sort(values);
+
+		return this;
+	}
+
+	@Override
+	public Element develop() {
+		// TODO
+		return this;
+	}
+
+	public Element reduceNumber() {
+		Number sum = Number.zero;
+
+		for (int i = values.size() - 1; i >= 0; i--) {
+			if (values.get(i).getType() == ElementType.Number) {
+				sum.add((Number) values.get(i));
+				values.remove(i);
+			}
+		}
+		if (!sum.isZero()) {
+			values.add(sum);
+		}
 
 		return this;
 	}

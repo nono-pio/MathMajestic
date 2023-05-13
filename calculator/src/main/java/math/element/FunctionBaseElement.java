@@ -72,7 +72,7 @@ public abstract class FunctionBaseElement extends Element {
 
 	public abstract Element recipFunctionXValue(Element y);
 
-	public abstract Element clonedSimplify();
+	public abstract Element develop();
 
 	public abstract Element derivativeBase();
 

@@ -44,8 +44,9 @@ public class Cos extends FunctionElement {
 		return new Product(new Number(-1), new Sin(this.value.clone()));
 	}
 	
-	public Element clonedSimplify() {
-		// TODO
+	@Override
+	public Element develop() {
+		// TODO Auto-generated method stub
 		return this;
 	}
 

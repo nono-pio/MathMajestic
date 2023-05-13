@@ -33,7 +33,7 @@ public abstract class PrimaryElement extends Element {
 		throw ErrorMessage.InvalidRecip(getType());
 	}
 
-	public Element clonedSimplify() {
+	public Element develop() {
 		return this;
 	}
 

@@ -11,22 +11,23 @@ import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
 import math.math.AdditionExtention;
+import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
 import math.tools.ElementCoef;
 
-public class Product extends Element {
+public class Product extends Element implements InfinitElement{
 
-	public List<Element> values = new ArrayList<>();
+	public List<Element> values;
 
 	// <------------ Constructor ------------>
 
 	public Product(Element... values) {
-		this.values.addAll(List.of(values));
+		this.values = new ArrayList<Element>(List.of(values));
 	}
 
 	public Product(List<Element> values) {
-		this.values = values;
+		this.values = new ArrayList<Element>(values);
 	}
 
 	// <----------------- Type -------------->
@@ -42,7 +43,7 @@ public class Product extends Element {
 	}
 
 	public void setValues(Element[] values) {
-		this.values = List.of(values);
+		this.values = new ArrayList<Element>(List.of(values));
 	}
 
 	public Element clone() {
@@ -140,8 +141,28 @@ public class Product extends Element {
 		if (additionChildren.size() == 1 && pro.size() == 0)
 			return additionChildren.get(0).clonedSimplify();
 
-		return AdditionExtention.Product(additionChildren.toArray(new Addition[additionChildren.size()]), pro)
-				.simplify();
+		return AdditionExtention.Product(additionChildren.toArray(new Addition[additionChildren.size()]), pro);
+	}
+	
+	public Element develop() {
+		// TODO
+		return this;
+	}
+	
+	public Element reduceNumber() {
+		Number pro = Number.one;
+
+		for (int i = values.size() - 1; i >= 0; i--) {
+			if (values.get(i).getType() == ElementType.Number) {
+				pro.mult((Number) values.get(i));
+				values.remove(i);
+			}
+		}
+		if (!pro.isEqual(Number.one)) {
+			values.add(pro);
+		}
+
+		return this;
 	}
 
 	public Element derivative(DerivativeSettings settings, int index) {

@@ -56,8 +56,8 @@ public abstract class FunctionElement extends Element {
 	}
 
 	public abstract Element recipFunction(Element y);
-
-	public abstract Element clonedSimplify();
+	
+	public abstract Element develop();
 	
 	public abstract Element derivative();
 	

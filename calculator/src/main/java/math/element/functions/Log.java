@@ -51,8 +51,9 @@ public class Log extends FunctionBaseElement {
 		return new Power(base, y); // log_b(x) = y --> x = b^y
 	}
 
-	public Element clonedSimplify() {
-		// TODO
+	@Override
+	public Element develop() {
+		// TODO Auto-generated method stub
 		return this;
 	}
 	
