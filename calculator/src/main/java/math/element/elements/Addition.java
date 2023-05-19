@@ -10,10 +10,10 @@ import math.element.ElementType;
 import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
+import math.simplification.ElementCoef;
 import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
-import math.tools.ElementCoef;
 
 public class Addition extends Element implements InfinitElement {
 
@@ -54,6 +54,10 @@ public class Addition extends Element implements InfinitElement {
 
 	public Element clone() {
 		return new Addition(Tools.cloneElementArray(getValues()));
+	}
+	
+	public int size() {
+		return values.size();
 	}
 
 	// <------------- String ---------------->
@@ -141,26 +145,44 @@ public class Addition extends Element implements InfinitElement {
 		return this;
 	}
 
-	@Override
 	public Element develop() {
-		// TODO
 		return this;
 	}
 
 	public Element reduceNumber() {
-		Number sum = Number.zero;
+		Number sum = new Number(0);
 
 		for (int i = values.size() - 1; i >= 0; i--) {
-			if (values.get(i).getType() == ElementType.Number) {
-				sum.add((Number) values.get(i));
+			if (values.get(i) instanceof Number number) {
+				
+				sum.add(number);
 				values.remove(i);
 			}
 		}
+		
 		if (!sum.isZero()) {
 			values.add(sum);
 		}
 
 		return this;
+	}
+	
+	public Number getCoef(int index) {
+		
+		if (values.get(index) instanceof Product product) {
+			return product.getCst();
+		}
+		
+		return new Number(1);
+	}
+	
+	public Element getElement(int index) {
+		
+		if (values.get(index) instanceof Product product) {
+			return product.getRest();
+		}
+		
+		return values.get(index);
 	}
 
 	public Element derivative(DerivativeSettings settings, int index) {

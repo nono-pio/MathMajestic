@@ -11,12 +11,12 @@ import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
 import math.math.AdditionExtention;
+import math.simplification.ElementCoef;
 import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
-import math.tools.ElementCoef;
 
-public class Product extends Element implements InfinitElement{
+public class Product extends Element implements InfinitElement {
 
 	public List<Element> values;
 
@@ -48,6 +48,10 @@ public class Product extends Element implements InfinitElement{
 
 	public Element clone() {
 		return new Product(Tools.cloneElementArray(getValues()));
+	}
+	
+	public int size() {
+		return values.size();
 	}
 
 	// <------------- String ---------------->
@@ -141,14 +145,47 @@ public class Product extends Element implements InfinitElement{
 		if (additionChildren.size() == 1 && pro.size() == 0)
 			return additionChildren.get(0).clonedSimplify();
 
-		return AdditionExtention.Product(additionChildren.toArray(new Addition[additionChildren.size()]), pro);
+		return AdditionExtention.Product(additionChildren, pro);
 	}
-	
+
 	public Element develop() {
-		// TODO
-		return this;
+
+		List<Element> elements = new ArrayList<>();
+		List<Addition> additions = new ArrayList<>();
+
+		for (Element element : values) {
+			if (element instanceof Addition add)
+				additions.add(add);
+			else
+				elements.add(element);
+		}
+
+		if (additions.size() == 0)
+			return this;
+
+		return AdditionExtention.Product(additions, elements);
+	}
+
+	public Number getCoef(int index) {
+
+		if (values.get(index) instanceof Power power && power.exponent instanceof Number number) {
+			return number;
+
+		}
+
+		return new Number(1);
 	}
 	
+	public Element getElement(int index) {
+
+		if (values.get(index) instanceof Power power && power.exponent instanceof Number) {
+			return power.base;
+
+		}
+
+		return new Number(1);
+	}
+
 	public Element reduceNumber() {
 		Number pro = Number.one;
 

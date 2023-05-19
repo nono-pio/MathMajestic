@@ -1,18 +1,20 @@
-package math.tools;
+package math.simplification;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import math.element.Element;
 import math.element.ElementType;
 import math.element.elements.Power;
 import math.element.elements.Product;
 import math.element.primary.Number;
+import math.tools.Tools;
 
 
 public class ElementCoef {
 	
-	public ArrayList<Element> elements;
-	public ArrayList<Number> coefs;
+	public List<Element> elements;
+	public List<Number> coefs;
 	
 	public ElementCoef()
 	{
