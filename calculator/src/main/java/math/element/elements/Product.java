@@ -187,7 +187,7 @@ public class Product extends Element implements InfinitElement {
 	}
 
 	public Element reduceNumber() {
-		Number pro = Number.one;
+		Number pro = new Number(1);
 
 		for (int i = values.size() - 1; i >= 0; i--) {
 			if (values.get(i).getType() == ElementType.Number) {
@@ -195,8 +195,15 @@ public class Product extends Element implements InfinitElement {
 				values.remove(i);
 			}
 		}
-		if (!pro.isEqual(Number.one)) {
+		
+		if (!pro.isEqual(new Number(1))) {
 			values.add(pro);
+		} else if (values.size() == 1) {
+			return values.get(0);
+		}
+		
+		if (values.size() == 0) {
+			return pro;
 		}
 
 		return this;

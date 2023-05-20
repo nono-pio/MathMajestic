@@ -26,7 +26,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Element element = new Addition(x, y, n1, new Product(n2, n5));
+		Element element = new Addition(x, y, n1, new Product(n2, n5, n5, x));
 
 		print(element);
 		print(element.simplify());
