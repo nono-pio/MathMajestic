@@ -37,17 +37,15 @@ public class Tan extends FunctionElement {
 	// <--------------- Math ---------------->
 
 	public Element recipFunction(Element y) {
-		// TODO
-		return y;
+		return new Atan(y);
 	}
 
 	public Element derivative() {
 		return new Division(new Number(1), new Power(new Cos(this.value.clone()), new Number(2)));
 	}
 	
-	@Override
 	public Element develop() {
-		// TODO Auto-generated method stub
+		// TODO
 		return this;
 	}
 

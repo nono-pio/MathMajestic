@@ -11,7 +11,6 @@ import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
 import math.math.AdditionExtention;
-import math.simplification.ElementCoef;
 import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
@@ -101,7 +100,6 @@ public class Product extends Element implements InfinitElement {
 
 		// arrange child
 		Number cste = new Number(1);
-		ElementCoef elemCoef = new ElementCoef();
 		ArrayList<Addition> additionChildren = new ArrayList<Addition>();
 
 		for (Element child : values) {
@@ -120,7 +118,6 @@ public class Product extends Element implements InfinitElement {
 					elem = child;
 					coef = new Number(1);
 				}
-				elemCoef.add(coef, elem);
 			}
 		}
 
@@ -129,23 +126,7 @@ public class Product extends Element implements InfinitElement {
 
 		boolean hasCste = !cste.isEqual(new Number(1));
 
-		if (additionChildren.size() == 0 && elemCoef.size() == 0)
-			return cste;
-
-		ArrayList<Element> pro = elemCoef.getElementsPower();
-
-		if (hasCste)
-			pro.add(cste);
-		if (additionChildren.size() == 0) {
-			Element[] newPro = pro.toArray(new Element[pro.size()]);
-			Arrays.sort(newPro);
-			return new Product(newPro);
-		}
-
-		if (additionChildren.size() == 1 && pro.size() == 0)
-			return additionChildren.get(0).clonedSimplify();
-
-		return AdditionExtention.Product(additionChildren, pro);
+		return this;
 	}
 
 	public Element develop() {

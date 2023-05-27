@@ -108,7 +108,6 @@ public class Power extends Element {
 		return this;
 	}
 	
-	@Override
 	public Element develop() {
 		// TODO
 		return this;

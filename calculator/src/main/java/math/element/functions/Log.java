@@ -37,10 +37,6 @@ public class Log extends FunctionBaseElement {
 		return new Log(value.clone(), base.clone());
 	}
 
-	// <------------- String ---------------->
-
-	
-	
 	// <--------------- Math ---------------->
 
 	public Element recipFunctionXBase(Element y) { // log_x(b) = y --> b^(1/y)
@@ -51,9 +47,8 @@ public class Log extends FunctionBaseElement {
 		return new Power(base, y); // log_b(x) = y --> x = b^y
 	}
 
-	@Override
 	public Element develop() {
-		// TODO Auto-generated method stub
+		// TODO
 		return this;
 	}
 	

@@ -4,14 +4,13 @@ import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionElement;
-import math.element.elements.Product;
 import math.element.primary.Number;
 
-public class Cos extends FunctionElement {
+public class Atan extends FunctionElement {
 
 	// <------------ Constructor ------------>
 
-	public Cos(Element value) {
+	public Atan(Element value) {
 		super(value);
 	}
 	
@@ -22,23 +21,26 @@ public class Cos extends FunctionElement {
 	}
 	
 	public String functionName() {
-		return "cos";
+		return "atan";
 	}
 
 	// <---------------- Values ------------->
 
 	public Element clone() {
-		return new Cos(value.clone());
+		return new Atan(value.clone());
 	}
+
+	// <------------- String ---------------->
 
 	// <--------------- Math ---------------->
 
 	public Element recipFunction(Element y) {
-		return new Acos(y);
+		return new Tan(y);
 	}
 
 	public Element derivative() {
-		return new Product(new Number(-1), new Sin(this.value.clone()));
+		// TODO
+		return this;
 	}
 	
 	public Element develop() {
@@ -50,6 +52,6 @@ public class Cos extends FunctionElement {
 	// <---------------- ToValue ------------>
 
 	public Number toValue(Number value) {
-		return MathN.cos(value);
+		return MathN.atan(value);
 	}
 }

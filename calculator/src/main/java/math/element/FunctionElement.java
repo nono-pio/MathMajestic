@@ -36,12 +36,12 @@ public abstract class FunctionElement extends Element {
 	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {
-		
+
 		String str = toString(settings, values[0]);
-		
+
 		if (parentType == ElementType.Power)
 			return StringFormat.bracket(str, settings.isLaTeX);
-		
+
 		return str;
 	}
 
@@ -56,11 +56,11 @@ public abstract class FunctionElement extends Element {
 	}
 
 	public abstract Element recipFunction(Element y);
-	
+
 	public abstract Element develop();
-	
+
 	public abstract Element derivative();
-	
+
 	public Element derivative(DerivativeSettings settings, int index) {
 		return derivative();
 	}

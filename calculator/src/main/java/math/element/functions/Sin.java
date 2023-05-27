@@ -30,22 +30,18 @@ public class Sin extends FunctionElement {
 		return new Sin(value.clone());
 	}
 
-	// <------------- String ---------------->
-
 	// <--------------- Math ---------------->
 
 	public Element recipFunction(Element y) {
-		// TODO
-		return y;
+		return new Asin(y);
 	}
 
 	public Element derivative() {
 		return new Cos(value.clone());
 	}
 	
-	@Override
 	public Element develop() {
-		// TODO Auto-generated method stub
+		// TODO
 		return this;
 	}
 

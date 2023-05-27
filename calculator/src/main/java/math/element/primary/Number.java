@@ -24,20 +24,24 @@ public class Number extends PrimaryElement {
 
 	// <-------- Number basic function --------->
 
-	public void add(Number num) {
+	public Number add(Number num) {
 		value += num.value;
+		return this;
 	}
 
-	public void sub(Number num) {
+	public Number sub(Number num) {
 		value -= num.value;
+		return this;
 	}
 
-	public void mult(Number num) {
+	public Number mult(Number num) {
 		value *= num.value;
+		return this;
 	}
 
-	public void div(Number num) {
+	public Number div(Number num) {
 		value /= num.value;
+		return this;
 	}
 
 	public boolean isEqual(Number num) {

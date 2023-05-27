@@ -74,23 +74,14 @@ public class Simplify {
 	}
 
 	public void simplifiCurrentElement() {
+		
+		
+		
+		
+		
+		
+		
 
-	}
-
-	public ElementCoef getElementCoef(InfinitElement infinitElement) {
-
-		ElementCoef elementCoef = new ElementCoef();
-
-		for (int i = 0; i < infinitElement.size(); i++) {
-
-			Number coef = infinitElement.getCoef(i);
-			Element element = infinitElement.getElement(i);
-
-			elementCoef.add(coef, element);
-
-		}
-
-		return elementCoef;
 	}
 
 	public void develop() {

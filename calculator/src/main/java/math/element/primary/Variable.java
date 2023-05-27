@@ -86,6 +86,10 @@ public class Variable extends PrimaryElement {
 		Variable var = (Variable) element2;
 		return variable.compareTo(var.variable);
 	}
+	
+	public void setValue(Number value) {
+		variableData.value = value;
+	}
 
 	public void setVariable(Variables variables, int[] curPath, Number value) {
 		variableData = variables.setVariable(variable);

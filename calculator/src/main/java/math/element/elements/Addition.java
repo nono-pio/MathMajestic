@@ -10,7 +10,6 @@ import math.element.ElementType;
 import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
-import math.simplification.ElementCoef;
 import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
@@ -105,7 +104,6 @@ public class Addition extends Element implements InfinitElement {
 		}
 
 		Number cste = new Number(0);
-		ElementCoef elemCoef = new ElementCoef();
 
 		for (Element child : values) {
 			if (child.getType() == ElementType.Number)
@@ -121,26 +119,9 @@ public class Addition extends Element implements InfinitElement {
 					elem = child;
 					coef = new Number(1);
 				}
-				elemCoef.add(coef, elem);
+
 			}
 		}
-
-		if (elemCoef.size() == 0)
-			return cste;
-		if (elemCoef.size() == 1 && cste.isZero())
-			return elemCoef.getElementProduct(0);
-
-		ArrayList<Element> newValues = elemCoef.getElementsProduct();
-		if (!cste.isZero())
-			newValues.add(cste);
-
-		if (newValues.size() == 0)
-			return new Number(0);
-		else if (newValues.size() == 1)
-			return newValues.get(0);
-
-		values = newValues;
-		Collections.sort(values);
 
 		return this;
 	}
