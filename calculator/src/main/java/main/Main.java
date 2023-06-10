@@ -1,35 +1,24 @@
 package main;
 
-import latex.*;
-
-import math.set.*;
-import math.set.SetNumber;
-
-import math.MathFlag;
-import math.MathN;
-import math.math.Fraction;
-
 import math.element.Element;
-import math.element.elements.*;
-import math.element.functions.*;
-import math.element.primary.*;
+import math.element.elements.Power;
 import math.element.primary.Number;
-import math.element.settings.*;
-import math.element.visual.*;
+import math.element.primary.Variable;
+import math.simplification.Simplification;
 
-import math.forms.*;
-import math.string_converter.StringConverter;
-import math.variables.GlobalVariable;
-
-@SuppressWarnings("unused")
 public class Main {
 
 	public static void main(String[] args) {
 
-		Element element = new Addition(x, y, n1, new Product(n2, n5, n5, x));
+		Element element = new Power(new Power(x, n5), n2);
+		Simplification simplification = Simplification.getSimplification(element);
+		Element simplifyElement = simplification.simplify().toElement();
 
 		print(element);
-		print(element.simplify());
+		print(simplification.toString());
+		print(simplifyElement);
+
+		// simplifyElement.forEach((e, p) -> System.out.println(e.getType()));
 
 		// LaTex latex = new LaTex(pythagore.toLaTeX());
 

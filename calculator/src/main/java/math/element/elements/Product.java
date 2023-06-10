@@ -11,11 +11,10 @@ import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
 import math.math.AdditionExtention;
-import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
 
-public class Product extends Element implements InfinitElement {
+public class Product extends Element {
 
 	public List<Element> values;
 
@@ -47,10 +46,6 @@ public class Product extends Element implements InfinitElement {
 
 	public Element clone() {
 		return new Product(Tools.cloneElementArray(getValues()));
-	}
-	
-	public int size() {
-		return values.size();
 	}
 
 	// <------------- String ---------------->
@@ -87,48 +82,6 @@ public class Product extends Element implements InfinitElement {
 		return values.get(path[0]).recipFunction(newPath(path), new Division(curRecip, new Product(div)));
 	}
 
-	public Element clonedSimplify() {
-
-		ArrayList<Element> newChilds = new ArrayList<>(); // extends the values with child Product and Sign
-		for (Element child : values) {
-			if (child.getType() == ElementType.Product)
-				newChilds.addAll(Arrays.asList(child.getValues()));
-			else
-				newChilds.add(child);
-		}
-		values = newChilds;
-
-		// arrange child
-		Number cste = new Number(1);
-		ArrayList<Addition> additionChildren = new ArrayList<Addition>();
-
-		for (Element child : values) {
-			if (child.getType() == ElementType.Number)
-				cste.mult((Number) child);
-			else if (child.getType() == ElementType.Addition)
-				additionChildren.add((Addition) child);
-			else {
-				Element elem;
-				Number coef;
-				if (child.getType() == ElementType.Power && ((Power) child).exponent.getType() == ElementType.Number) {
-					Power childPow = (Power) child;
-					elem = childPow.base;
-					coef = (Number) childPow.exponent;
-				} else {
-					elem = child;
-					coef = new Number(1);
-				}
-			}
-		}
-
-		if (cste.isZero())
-			return new Number(0);
-
-		boolean hasCste = !cste.isEqual(new Number(1));
-
-		return this;
-	}
-
 	public Element develop() {
 
 		List<Element> elements = new ArrayList<>();
@@ -145,49 +98,6 @@ public class Product extends Element implements InfinitElement {
 			return this;
 
 		return AdditionExtention.Product(additions, elements);
-	}
-
-	public Number getCoef(int index) {
-
-		if (values.get(index) instanceof Power power && power.exponent instanceof Number number) {
-			return number;
-
-		}
-
-		return new Number(1);
-	}
-	
-	public Element getElement(int index) {
-
-		if (values.get(index) instanceof Power power && power.exponent instanceof Number) {
-			return power.base;
-
-		}
-
-		return new Number(1);
-	}
-
-	public Element reduceNumber() {
-		Number pro = new Number(1);
-
-		for (int i = values.size() - 1; i >= 0; i--) {
-			if (values.get(i).getType() == ElementType.Number) {
-				pro.mult((Number) values.get(i));
-				values.remove(i);
-			}
-		}
-		
-		if (!pro.isEqual(new Number(1))) {
-			values.add(pro);
-		} else if (values.size() == 1) {
-			return values.get(0);
-		}
-		
-		if (values.size() == 0) {
-			return pro;
-		}
-
-		return this;
 	}
 
 	public Element derivative(DerivativeSettings settings, int index) {
@@ -207,23 +117,6 @@ public class Product extends Element implements InfinitElement {
 	}
 
 	// <----------- Other Function ---------->
-
-	public Number getCst() {
-		Number cst = new Number(1);
-		for (Element element : values) {
-			if (element.getType() == ElementType.Number)
-				cst.mult((Number) element);
-			;
-		}
-		return cst;
-	}
-
-	public Element getRest() {
-		Element[] rest = getRestList();
-		if (rest.length == 1)
-			return rest[0];
-		return new Product(rest);
-	}
 
 	public Element[] getRestList() {
 		List<Element> rest = new ArrayList<Element>();

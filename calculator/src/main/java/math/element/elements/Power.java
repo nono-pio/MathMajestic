@@ -73,40 +73,6 @@ public class Power extends Element {
 			return exponent.recipFunction(newPath(path), newRecip);
 		}
 	}
-
-	public Element clonedSimplify() {
-
-		if (exponent.getType() == ElementType.Number) {
-			Number exp = (Number) exponent;
-			if (exp.isEqual(new Number(1)))
-				return base;
-			else if (exp.isEqual(new Number(0)))
-				return new Number(1);
-			else if (exp.isInteger() && base.getType() == ElementType.Addition)
-				return AdditionExtention.Power((Addition) base, exp.toInteger());
-		}
-
-		if (exponent.getType() == ElementType.Log) {
-			Log exp = (Log) exponent;
-			if (base.isEqual(exp.base))
-				return exp.value;
-		}
-
-		if (base.getType() == ElementType.Number) {
-			Number bas = (Number) base;
-			if (bas.isEqual(new Number(1)))
-				return new Number(1);
-			else if (bas.isEqual(new Number(0)))
-				return new Number(0);
-		}
-
-		if (base.getType() == ElementType.Power) {
-			Power bas = (Power) base;
-			return new Power(bas.base, new Product(exponent, bas.exponent).clonedSimplify()).clonedSimplify();
-		}
-
-		return this;
-	}
 	
 	public Element develop() {
 		// TODO

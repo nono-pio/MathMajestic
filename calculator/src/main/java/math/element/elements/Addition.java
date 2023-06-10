@@ -1,7 +1,6 @@
 package math.element.elements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import math.MathN;
@@ -10,11 +9,10 @@ import math.element.ElementType;
 import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
-import math.simplification.InfinitElement;
 import math.tools.StringFormat;
 import math.tools.Tools;
 
-public class Addition extends Element implements InfinitElement {
+public class Addition extends Element {
 
 	public List<Element> values;
 
@@ -55,10 +53,6 @@ public class Addition extends Element implements InfinitElement {
 		return new Addition(Tools.cloneElementArray(getValues()));
 	}
 	
-	public int size() {
-		return values.size();
-	}
-
 	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {
@@ -94,78 +88,10 @@ public class Addition extends Element implements InfinitElement {
 		return values.get(path[0]).recipFunction(newPath(path), new Addition(newRecip));
 	}
 
-	public Element clonedSimplify() {
-
-		for (int i = 0; i < values.size(); i++) {
-			if (values.get(i).getType() == ElementType.Addition) {
-				values.addAll(((Addition) values.get(i)).values);
-				values.remove(i);
-			}
-		}
-
-		Number cste = new Number(0);
-
-		for (Element child : values) {
-			if (child.getType() == ElementType.Number)
-				cste.add((Number) child);
-			else {
-				Element elem;
-				Number coef;
-				if (child.getType() == ElementType.Product) {
-					Product childPro = (Product) child;
-					elem = childPro.getRest();
-					coef = childPro.getCst();
-				} else {
-					elem = child;
-					coef = new Number(1);
-				}
-
-			}
-		}
-
-		return this;
-	}
-
 	public Element develop() {
 		return this;
 	}
-
-	public Element reduceNumber() {
-		Number sum = new Number(0);
-
-		for (int i = values.size() - 1; i >= 0; i--) {
-			if (values.get(i) instanceof Number number) {
-				
-				sum.add(number);
-				values.remove(i);
-			}
-		}
-		
-		if (!sum.isZero()) {
-			values.add(sum);
-		}
-
-		return this;
-	}
 	
-	public Number getCoef(int index) {
-		
-		if (values.get(index) instanceof Product product) {
-			return product.getCst();
-		}
-		
-		return new Number(1);
-	}
-	
-	public Element getElement(int index) {
-		
-		if (values.get(index) instanceof Product product) {
-			return product.getRest();
-		}
-		
-		return values.get(index);
-	}
-
 	public Element derivative(DerivativeSettings settings, int index) {
 		return new Number(1);
 	}

@@ -13,7 +13,6 @@ import math.element.settings.DerivativeSettings;
 import math.element.settings.IElement;
 import math.element.settings.NumberResponse;
 import math.element.settings.StringSettings;
-import math.simplification.Simplify;
 import math.tools.Position;
 
 /**
@@ -92,10 +91,6 @@ public abstract class Element implements Comparable<Element> {
 
 	public abstract Element recipFunction(int[] path, Element curRecip);
 
-	public Element simplify() {
-		return new Simplify(this).simplify();
-	}
-	
 	public abstract Element derivative(DerivativeSettings settings, int index);
 
 	public Element derivative(DerivativeSettings settings) {
