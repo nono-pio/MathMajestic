@@ -18,7 +18,7 @@ public class Addition extends Element {
 
 	// <------------ Constructor ------------>
 
-	public Addition(Element ... values) {
+	public Addition(Element... values) {
 		this.values = new ArrayList<>(List.of(values));
 	}
 
@@ -52,14 +52,14 @@ public class Addition extends Element {
 	public Element clone() {
 		return new Addition(Tools.cloneElementArray(getValues()));
 	}
-	
+
 	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {
 
 		String str = StringFormat.arrayStr(values, " + ");
 
-		if (parentType == null || parentType == ElementType.Division || parentType == ElementType.Addition)
+		if (parentType == null || parentType == ElementType.Addition)
 			return str;
 		else
 			return StringFormat.bracket(str, settings.isLaTeX);
@@ -91,7 +91,7 @@ public class Addition extends Element {
 	public Element develop() {
 		return this;
 	}
-	
+
 	public Element derivative(DerivativeSettings settings, int index) {
 		return new Number(1);
 	}

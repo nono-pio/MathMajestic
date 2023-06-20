@@ -8,7 +8,7 @@ public class NumberSimplification extends Simplification {
 	Number number;
 
 	public NumberSimplification(Number number) {
-		this.number = number;
+		this.number = (Number) number.clone();
 	}
 
 	public boolean isEqual(Simplification simplification) {

@@ -1,5 +1,6 @@
 package math.element.primary;
 
+import exeptions.math.DivideByZeroException;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.PrimaryElement;
@@ -10,7 +11,7 @@ public class Number extends PrimaryElement {
 
 	public static final Number zero = new Number(0);
 	public static final Number one = new Number(1);
-	
+
 	public float value;
 
 	// <------------ Constructor ------------>
@@ -29,8 +30,18 @@ public class Number extends PrimaryElement {
 		return this;
 	}
 
+	public Number add(float num) {
+		value += num;
+		return this;
+	}
+
 	public Number sub(Number num) {
 		value -= num.value;
+		return this;
+	}
+
+	public Number sub(float num) {
+		value -= num;
 		return this;
 	}
 
@@ -39,13 +50,33 @@ public class Number extends PrimaryElement {
 		return this;
 	}
 
+	public Number mult(float num) {
+		value *= num;
+		return this;
+	}
+
 	public Number div(Number num) {
+		if (num.value == 0)
+			throw new DivideByZeroException();
+
 		value /= num.value;
+		return this;
+	}
+
+	public Number div(float num) {
+		if (num == 0)
+			throw new DivideByZeroException();
+
+		value /= num;
 		return this;
 	}
 
 	public boolean isEqual(Number num) {
 		return Math.abs(value - num.value) <= 0.005;
+	}
+
+	public boolean isEqual(float num) {
+		return Math.abs(value - num) <= 0.005;
 	}
 
 	public boolean isZero() {
@@ -71,13 +102,13 @@ public class Number extends PrimaryElement {
 	public Element clone() {
 		return new Number(value);
 	}
-	
+
 	// <---------------- Math --------------->
 
 	public Element derivative(DerivativeSettings settings) {
 		return zero;
 	}
-	
+
 	// <------------- String ---------------->
 
 	public String toString(ElementType parentType, StringSettings settings, String[] values) {
@@ -97,7 +128,7 @@ public class Number extends PrimaryElement {
 	public int compareTo(Element element2) {
 		if (element2.getType() != getType())
 			return getType().compareTo(element2.getType());
-		
+
 		Number num = (Number) element2;
 		return Float.compare(value, num.value);
 	}

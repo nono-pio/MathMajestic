@@ -39,6 +39,8 @@ public class DefaultSimplification extends Simplification {
 
 	public Simplification simplify() {
 
+		System.out.println("Simplify");
+
 		boolean allNumbers = true;
 		for (Simplification simplification : values) {
 			if (!(simplification instanceof NumberSimplification)) {

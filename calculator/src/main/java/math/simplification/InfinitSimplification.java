@@ -70,7 +70,7 @@ public class InfinitSimplification extends Simplification {
 
 					Number cste = infSim.cste;
 
-					if (infSim.size() == 1) {
+					if (infSim.size() == 1 && infSim.coefs.get(0).isEqual(1)) {
 						add(infSim.simplifications.get(0), cste);
 					} else {
 						infSim.setDefaultCste();
@@ -135,8 +135,12 @@ public class InfinitSimplification extends Simplification {
 
 	public void generatePow(Simplification base, Number exp) {
 
-		if (base instanceof InfinitSimplification infSim && infSim.type == InfinitType.Product) {
+		if (base instanceof NumberSimplification number) {
+			updateCste(number.number.mult(exp));
+
+		} else if (base instanceof InfinitSimplification infSim && infSim.type == InfinitType.Product) {
 			merchPow(infSim, exp);
+
 		} else {
 			add(base, exp);
 		}
@@ -178,6 +182,11 @@ public class InfinitSimplification extends Simplification {
 	}
 
 	public Simplification simplifyMult() {
+
+		if (cste.isZero()) {
+			return new NumberSimplification(new Number(0));
+		}
+
 		return this;
 	}
 

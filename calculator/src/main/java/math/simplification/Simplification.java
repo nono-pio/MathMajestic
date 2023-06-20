@@ -20,7 +20,7 @@ public abstract class Simplification {
 		Simplification[] simplifications = new Simplification[values.length];
 
 		for (int i = 0; i < simplifications.length; i++) {
-			simplifications[i] = getSimplification(values[i]);
+			simplifications[i] = getSimplification(values[i]).simplify();
 
 			// Test if all numbers
 		}

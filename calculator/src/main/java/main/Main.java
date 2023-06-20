@@ -1,24 +1,47 @@
 package main;
 
+import exeptions.math.MathException;
 import math.element.Element;
-import math.element.elements.Power;
 import math.element.primary.Number;
 import math.element.primary.Variable;
+import math.random.RandomElement;
 import math.simplification.Simplification;
 
 public class Main {
 
 	public static void main(String[] args) {
 
-		Element element = new Power(new Power(x, n5), n2);
-		Simplification simplification = Simplification.getSimplification(element);
-		Element simplifyElement = simplification.simplify().toElement();
+		StringBuilder str = new StringBuilder();
 
-		print(element);
-		print(simplification.toString());
-		print(simplifyElement);
+		for (int i = 0; i < 10; i++) {
 
-		// simplifyElement.forEach((e, p) -> System.out.println(e.getType()));
+			Element element = RandomElement.randomBasic(5, 25, 5, 3);
+
+			String result;
+
+			try {
+
+				Element simp = Simplification.getSimplification(element).simplify().toElement();
+
+				result = simp.toLaTeX();
+
+			} catch (MathException e) {
+
+				result = "Undefined Equation";
+
+			}
+
+			str.append("\\begin{equation}\n").append(element.toLaTeX()).append(" = ").append(result)
+					.append("\n\\end{equation}\n\n");
+
+		}
+
+		print(str);
+
+		/*
+		 * randomElement.forEach((e, p) -> { if (!(e instanceof PrimaryElement))
+		 * System.out.println(e.getType()); });
+		 */
 
 		// LaTex latex = new LaTex(pythagore.toLaTeX());
 
