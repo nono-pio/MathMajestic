@@ -21,15 +21,15 @@ public class Main {
 		// print(str);
 		// saveKboard(str);
 
-		long start = System.nanoTime();
+//		long start = System.nanoTime();
+//
+//		Simplification.getSimplification(LatexConverter.convert(" 1 + 2 * 3 ^ 4 / 5 "));
+//
+//		long end = System.nanoTime();
+//
+//		System.out.println((end - start) / (double) 10e6);
 
-		Simplification.getSimplification(LatexConverter.convert(" 1 + 2 * 3 ^ 4 / 5 "));
-
-		long end = System.nanoTime();
-
-		System.out.println((end - start) / (double) 10e6);
-
-		// print(LatexConverter.convert(" 1 * 2 ^ 3 "));
+		print(LatexConverter.convert(" 1 + ( 2 * (3 + 4) ) "));
 
 		/*
 		 * ObjectMapper obj = new ObjectMapper();
@@ -51,98 +51,6 @@ public class Main {
 		// LaTex latex = new LaTex(pythagore.toLaTeX());
 
 		// new Frame("Title", latex, 1000, 500, 50);
-	}
-
-	static void methodElif(char c) {
-
-		if (c == 'a') {
-			return;
-		} else if (c == 'b') {
-			return;
-		} else if (c == 'c') {
-			return;
-		} else if (c == 'd') {
-			return;
-		} else if (c == 'e') {
-			return;
-		} else if (c == 'f') {
-			return;
-		} else if (c == 'g') {
-			return;
-		} else if (c == 'h') {
-			return;
-		} else if (c == 'i') {
-			return;
-		} else if (c == 'j') {
-			return;
-		} else if (c == 'k') {
-			return;
-		} else if (c == 'l') {
-			return;
-		} else if (c == 'm') {
-			return;
-		} else if (c == 'n') {
-			return;
-		} else if (c == 'o') {
-			return;
-		} else if (c == 'p') {
-			return;
-		} else if (c == 'q') {
-			return;
-		} else if (c == 'r') {
-			return;
-		} else if (c == 's') {
-			return;
-		}
-
-		return;
-	}
-
-	static void methodSwitch(char c) {
-
-		switch (c) {
-		case 'a':
-			return;
-		case 'b':
-			return;
-		case 'c':
-			return;
-		case 'd':
-			return;
-		case 'e':
-			return;
-		case 'f':
-			return;
-		case 'g':
-			return;
-		case 'h':
-			return;
-		case 'i':
-			return;
-		case 'j':
-			return;
-		case 'k':
-			return;
-		case 'l':
-			return;
-		case 'm':
-			return;
-		case 'n':
-			return;
-		case 'o':
-			return;
-		case 'p':
-			return;
-		case 'q':
-			return;
-		case 'r':
-			return;
-		case 's':
-			return;
-
-		}
-
-		return;
 	}
 
 	static void saveKboard(String message) {

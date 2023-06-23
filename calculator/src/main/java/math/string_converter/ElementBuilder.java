@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import math.element.Element;
-import math.element.PrimaryElement;
 
 public class ElementBuilder {
 
 	NodeElementBuilder firstNode;
 
-	List<PrimaryElement> primarys;
+	List<Element> elements;
 
 	public ElementBuilder() {
-		primarys = new ArrayList<>();
+		elements = new ArrayList<>();
 	}
 
 	public void add(NodeElementType type) {
@@ -22,24 +21,24 @@ public class ElementBuilder {
 
 	}
 
-	public void add(PrimaryElement primary) {
+	public void add(Element element) {
 
-		primarys.add(primary);
+		elements.add(element);
 
 		if (firstNode == null) {
-			firstNode = new NodeElementBuilder(primarys.size() - 1);
+			firstNode = new NodeElementBuilder(elements.size() - 1);
 		} else {
-			firstNode.addPrimary(new NodeElementBuilder(primarys.size() - 1));
+			firstNode.addPrimary(new NodeElementBuilder(elements.size() - 1));
 		}
 	}
 
 	public Element build() {
-		return firstNode.build(primarys);
+		return firstNode.build(elements);
 	}
 
 	public String toString() {
 
-		return primarys + "\t" + firstNode;
+		return elements + "\t" + firstNode;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import math.element.Element;
-import math.element.PrimaryElement;
 import math.element.elements.Addition;
 import math.element.elements.Division;
 import math.element.elements.Power;
@@ -57,14 +56,14 @@ public class NodeElementBuilder {
 	}
 
 	/* <------------------- Build --------------------> */
-	public Element build(List<PrimaryElement> primarys) {
+	public Element build(List<Element> elements) {
 
-		Element[] buildChilds = getBuildChild(primarys);
+		Element[] buildChilds = getBuildChild(elements);
 
 		switch (type) {
 
 		case Primary:
-			return primarys.get(indexPrimary);
+			return elements.get(indexPrimary);
 
 		case Addition:
 			return new Addition(buildChilds);
@@ -86,12 +85,12 @@ public class NodeElementBuilder {
 		throw new RuntimeException("Invalid type");
 	}
 
-	private Element[] getBuildChild(List<PrimaryElement> primarys) {
+	private Element[] getBuildChild(List<Element> elements) {
 
 		Element[] buildChilds = new Element[childs.size()];
 
 		for (int i = 0; i < buildChilds.length; i++) {
-			buildChilds[i] = childs.get(i).build(primarys);
+			buildChilds[i] = childs.get(i).build(elements);
 		}
 
 		return buildChilds;
