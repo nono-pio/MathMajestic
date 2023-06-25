@@ -1,11 +1,15 @@
 package math.string_converter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import math.element.Element;
+import math.element.elements.Division;
+import math.element.elements.Power;
 import math.element.primary.Number;
 import math.element.primary.Variable;
 
+// todo : new sys end latex see mathquill + add function \sin x and sin x
 public class LatexConverter {
 
 	static final String[] greekLetter = { "alpha", "beta", "gamma", "delta", "epsilon", "yeta", "phi", "pi", "theta" };
@@ -17,6 +21,8 @@ public class LatexConverter {
 
 	LatexConverter parenthesis;
 	int parenthesisLevel = 0;
+
+	int latexParameter = 0;
 
 	public LatexConverter() {
 		this.builder = new ElementBuilder();
@@ -104,9 +110,17 @@ public class LatexConverter {
 
 		case Latex:
 
-			if (c == ' ') {
+			if (c == '{') {
+				latexParameter++;
+			}
+
+			if (c == '}') {
+				latexParameter--;
+			}
+
+			if (c == ' ' && latexParameter == 0) {
 				mode = null;
-				// do latex
+				doLatex();
 			} else {
 				stringData.append(c);
 			}
@@ -115,7 +129,7 @@ public class LatexConverter {
 
 		case Number:
 
-			if (!Character.isDigit(c) || c != '.' || c != ',') {
+			if (!Character.isDigit(c) && c != '.' && c != ',') {
 
 				mode = null;
 
@@ -162,13 +176,21 @@ public class LatexConverter {
 
 	public void doLatex() {
 
-		String latex = stringData.toString();
+		String[] latexStructur = extractParameter(stringData.toString()); // [latex name; ...parameters... ]
+		String latex = latexStructur[0];
 		stringData = new StringBuilder();
 
 		switch (latex) {
 		case "cdot":
 			builder.add(NodeElementType.Product);
 			return;
+		case "frac":
+			builder.add(new Division(convert(latexStructur[1]), convert(latexStructur[2])));
+			return;
+		case "sqrt":
+			builder.add(new Power(convert(latexStructur[1]), new Number(0.5f)));
+			return;
+
 		case "left(":
 			startParenthesis();
 			return;
@@ -183,8 +205,45 @@ public class LatexConverter {
 				builder.add(new Variable('\\' + latex));
 
 			}
+		}
+	}
+
+	public String[] extractParameter(String latex) {
+
+		ArrayList<String> structur = new ArrayList<>();
+		String[] nameAndParameters = latex.split("\\{", 2);
+		int latexParameterLevel = 1;
+
+		if (nameAndParameters.length == 1) {
+			return new String[] { nameAndParameters[0] };
+		}
+
+		structur.add(nameAndParameters[0]);
+
+		StringBuilder str = new StringBuilder();
+		for (char c : nameAndParameters[1].toCharArray()) {
+
+			if (c == '}') {
+				latexParameterLevel--;
+			}
+
+			if (c == '{') {
+				latexParameterLevel++;
+				if (latexParameterLevel == 1) {
+					continue;
+				}
+			}
+
+			if (latexParameterLevel > 0) {
+				str.append(c);
+			} else {
+				structur.add(str.toString());
+				str = new StringBuilder();
+			}
 
 		}
+
+		return structur.toArray(new String[structur.size()]);
 
 	}
 
@@ -225,7 +284,27 @@ public class LatexConverter {
 			converter.add(c);
 
 			str += c;
-			System.out.println(str + "\t" + converter);
+			// System.out.println(str + "\t" + converter);
+		}
+
+		converter.end();
+
+		// System.out.println(converter);
+
+		return converter.toElement();
+	}
+
+	public static Element convertDebug(String string) {
+
+		LatexConverter converter = new LatexConverter();
+
+		String str = "";
+
+		for (char c : string.toCharArray()) {
+			converter.add(c);
+
+			str += c;
+			System.out.println("\'" + c + "\' + " + str + "\t" + converter);
 		}
 
 		converter.end();
@@ -235,9 +314,10 @@ public class LatexConverter {
 		return converter.toElement();
 	}
 
+	@Override
 	public String toString() {
-		return "LatexConverter [stringData=" + stringData + ", dataType=" + mode + ", builder=" + builder
-				+ ", parenthesisLevel=" + parenthesisLevel + ", parenthesis=" + parenthesis + "]";
+		return "LatexConverter [stringData=" + stringData + ", mode=" + mode + ", builder=" + builder + ", parenthesis="
+				+ parenthesis + ", parenthesisLevel=" + parenthesisLevel + ", latexParameter=" + latexParameter + "]";
 	}
 
 	enum Mode {

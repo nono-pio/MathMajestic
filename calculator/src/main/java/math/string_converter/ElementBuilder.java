@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import math.element.Element;
+import math.element.primary.Number;
 
 public class ElementBuilder {
 
 	NodeElementBuilder firstNode;
+
+	boolean lastIsOperator = true;
 
 	List<Element> elements;
 
@@ -17,11 +20,24 @@ public class ElementBuilder {
 
 	public void add(NodeElementType type) {
 
+		if (type == NodeElementType.Subtract && lastIsOperator) {
+			add(new Number(-1));
+			add(NodeElementType.Product);
+			return;
+		}
+
 		firstNode = firstNode.add(type);
+		lastIsOperator = true;
 
 	}
 
 	public void add(Element element) {
+
+		if (!lastIsOperator) {
+			add(NodeElementType.Product);
+		}
+
+		lastIsOperator = false;
 
 		elements.add(element);
 

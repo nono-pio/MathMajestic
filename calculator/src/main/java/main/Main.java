@@ -21,15 +21,18 @@ public class Main {
 		// print(str);
 		// saveKboard(str);
 
-//		long start = System.nanoTime();
-//
-//		Simplification.getSimplification(LatexConverter.convert(" 1 + 2 * 3 ^ 4 / 5 "));
-//
-//		long end = System.nanoTime();
-//
-//		System.out.println((end - start) / (double) 10e6);
+		long start = System.nanoTime();
 
-		print(LatexConverter.convert(" 1 + ( 2 * (3 + 4) ) "));
+		// String test = "frac{ \\left( x^2 + 3 \\right) }{ ce^{x} }";
+		// print(Arrays.toString(new LatexConverter().extractParameter(test))); // -->
+		// latex; x^2; x^{2+4}
+
+		Element element = LatexConverter.convert(" 34 ");
+
+		long end = System.nanoTime();
+
+		print(element);
+		System.out.println("Time to solve : " + ((end - start) / (double) 10e6) + " ms");
 
 		/*
 		 * ObjectMapper obj = new ObjectMapper();
