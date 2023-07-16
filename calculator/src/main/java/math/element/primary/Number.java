@@ -119,8 +119,8 @@ public class Number extends PrimaryElement {
 
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number[] values) {
-		return this;
+	public double calculateReal() {
+		return this.value;
 	}
 
 	// <----------- Other Function ----------->

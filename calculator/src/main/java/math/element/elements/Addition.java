@@ -3,7 +3,6 @@ package math.element.elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.primary.Number;
@@ -98,7 +97,13 @@ public class Addition extends Element {
 
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number[] values) {
-		return MathN.sum(values);
+	public double calculateReal() {
+
+		double sum = 0;
+		for (Element element : values) {
+			sum += element.calculateReal();
+		}
+
+		return sum;
 	}
 }

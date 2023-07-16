@@ -51,20 +51,19 @@ public class Log extends FunctionBaseElement {
 		// TODO
 		return this;
 	}
-	
+
 	public Element derivativeValue() {
 		return new Division(new Number(1), new Product(value.clone(), new Log(base.clone())));
 	}
-	
+
 	public Element derivativeBase() {
-		return new Division(
-				new Product(new Number(-1), new Log(value.clone())),
+		return new Division(new Product(new Number(-1), new Log(value.clone())),
 				new Product(base.clone(), new Power(new Log(base.clone()), new Number(2))));
 	}
 
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number value, Number base) {
-		return MathN.log(value, base);
+	public double calculateReal() {
+		return Math.log(value.calculateReal()) / Math.log(base.calculateReal());
 	}
 }

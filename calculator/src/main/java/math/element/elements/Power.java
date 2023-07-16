@@ -1,13 +1,11 @@
 package math.element.elements;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.functions.Log;
 import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
-import math.math.AdditionExtention;
 import math.tools.StringFormat;
 
 public class Power extends Element {
@@ -21,7 +19,7 @@ public class Power extends Element {
 		this.base = base;
 		this.exponent = exponent;
 	}
-	
+
 	public Power(Element base, float exponent) {
 		this.base = base;
 		this.exponent = new Number(exponent);
@@ -73,7 +71,7 @@ public class Power extends Element {
 			return exponent.recipFunction(newPath(path), newRecip);
 		}
 	}
-	
+
 	public Element develop() {
 		// TODO
 		return this;
@@ -90,7 +88,7 @@ public class Power extends Element {
 
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number[] values) {
-		return MathN.pow(values[0], values[1]);
+	public double calculateReal() {
+		return Math.pow(base.calculateReal(), exponent.calculateReal());
 	}
 }

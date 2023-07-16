@@ -1,6 +1,5 @@
 package math.element.functions;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionElement;
@@ -15,13 +14,13 @@ public class Tan extends FunctionElement {
 	public Tan(Element value) {
 		super(value);
 	}
-	
+
 	// <----------------- Type -------------->
 
 	public ElementType getType() {
 		return ElementType.Tan;
 	}
-	
+
 	public String functionName() {
 		return "tan";
 	}
@@ -43,16 +42,15 @@ public class Tan extends FunctionElement {
 	public Element derivative() {
 		return new Division(new Number(1), new Power(new Cos(this.value.clone()), new Number(2)));
 	}
-	
+
 	public Element develop() {
 		// TODO
 		return this;
 	}
 
-
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number value) {
-		return MathN.tan(value);
+	public double calculateReal() {
+		return Math.tan(value.calculateReal());
 	}
 }

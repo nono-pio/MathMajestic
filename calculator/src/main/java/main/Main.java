@@ -3,14 +3,21 @@ package main;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.Arrays;
 
 import exeptions.math.MathException;
 import math.element.Element;
+import math.element.elements.Addition;
+import math.element.elements.Division;
+import math.element.elements.Power;
+import math.element.elements.Product;
+import math.element.functions.Log;
 import math.element.primary.Number;
 import math.element.primary.Variable;
+import math.element.visual.Exp;
 import math.random.RandomElement;
 import math.simplification.Simplification;
-import math.string_converter.LatexConverter;
+import math.variables.GlobalVariable;
 
 public class Main {
 
@@ -21,18 +28,43 @@ public class Main {
 		// print(str);
 		// saveKboard(str);
 
+		Element sigmoide = new Division(n1, new Addition(n1, new Exp(new Product(new Number(-1), new Variable("x")))));
+		Element recSigmoide = new Product(new Number(-1),
+				new Log(new Addition(new Division(n1, new Variable("x")), new Number(-1))));
+
+		Element fx = new Power(new Variable("x"), n2);
+		System.out.println(fx);
+
+		fx.replaceVariable(x, recSigmoide);
+		sigmoide.replaceVariable(x, fx);
+
+		print(sigmoide);
+
 		long start = System.nanoTime();
 
-		// String test = "frac{ \\left( x^2 + 3 \\right) }{ ce^{x} }";
-		// print(Arrays.toString(new LatexConverter().extractParameter(test))); // -->
-		// latex; x^2; x^{2+4}
+		int n = 100;
+		double[] result = new double[n + 1];
 
-		Element element = LatexConverter.convert(" 34 ");
+		double deltaX = 1 / (double) n;
+
+		// [0, 1]
+		double x = 0;
+		for (int i = 0; i <= n; i++) {
+
+			GlobalVariable.setVariable("x", new Number((float) x));
+			result[i] = sigmoide.calculateReal();
+
+			x += deltaX;
+		}
 
 		long end = System.nanoTime();
 
-		print(element);
+		System.out.println(Arrays.toString(result));
 		System.out.println("Time to solve : " + ((end - start) / (double) 10e6) + " ms");
+		System.out.println("Time to solve : " + (10e9 / (double) (end - start)) + " Hz");
+
+		// calculateReal : 100k - 200k calc per second 33 times faster
+		// toValue : 3.5k - 5.5k calc per second
 
 		/*
 		 * ObjectMapper obj = new ObjectMapper();

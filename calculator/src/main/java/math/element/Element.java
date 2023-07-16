@@ -1,8 +1,8 @@
 package math.element;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 
 import math.element.elements.Addition;
 import math.element.elements.Division;
@@ -11,7 +11,6 @@ import math.element.primary.Number;
 import math.element.primary.Variable;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.IElement;
-import math.element.settings.NumberResponse;
 import math.element.settings.StringSettings;
 import math.tools.Position;
 
@@ -86,7 +85,7 @@ public abstract class Element implements Comparable<Element> {
 			return this;
 		return new Division(this, div);
 	}
-	
+
 	public abstract Element develop();
 
 	public abstract Element recipFunction(int[] path, Element curRecip);
@@ -121,19 +120,7 @@ public abstract class Element implements Comparable<Element> {
 
 	// <--------------- ToValue ------------------->
 
-	public abstract Number toValue(Number[] values);
-
-	public NumberResponse toValue() {
-
-		Element[] childs = getValues();
-		Number[] valuesChilds = new Number[childs.length];
-
-		for (int i = 0; i < valuesChilds.length; i++) {
-			valuesChilds[i] = childs[i].toValue().getImportantValue();
-		}
-
-		return new NumberResponse(toValue(valuesChilds));
-	}
+	public abstract double calculateReal();
 
 	// <---------------- Other Function ----------->
 

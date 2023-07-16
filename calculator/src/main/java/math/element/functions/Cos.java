@@ -1,6 +1,5 @@
 package math.element.functions;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionElement;
@@ -14,13 +13,13 @@ public class Cos extends FunctionElement {
 	public Cos(Element value) {
 		super(value);
 	}
-	
+
 	// <----------------- Type -------------->
 
 	public ElementType getType() {
 		return ElementType.Cos;
 	}
-	
+
 	public String functionName() {
 		return "cos";
 	}
@@ -40,16 +39,15 @@ public class Cos extends FunctionElement {
 	public Element derivative() {
 		return new Product(new Number(-1), new Sin(this.value.clone()));
 	}
-	
+
 	public Element develop() {
 		// TODO
 		return this;
 	}
 
-
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number value) {
-		return MathN.cos(value);
+	public double calculateReal() {
+		return Math.cos(value.calculateReal());
 	}
 }

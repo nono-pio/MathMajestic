@@ -68,10 +68,10 @@ public class Variable extends PrimaryElement {
 
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number[] values) {
+	public double calculateReal() {
 		if (variableData == null || variableData.value == null)
 			throw ErrorMessage.VariableNotSet(variable);
-		return variableData.value;
+		return variableData.value.value;
 	}
 
 	// <---------- Other Function ------------>
@@ -86,7 +86,7 @@ public class Variable extends PrimaryElement {
 		Variable var = (Variable) element2;
 		return variable.compareTo(var.variable);
 	}
-	
+
 	public void setValue(Number value) {
 		variableData.value = value;
 	}

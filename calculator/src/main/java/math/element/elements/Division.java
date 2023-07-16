@@ -1,6 +1,5 @@
 package math.element.elements;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.primary.Number;
@@ -79,14 +78,13 @@ public class Division extends Element {
 		if (index == 0) {
 			return new Division(new Number(1), denominator.clone());
 		} else
-			return new Division(
-					new Product(new Number(-1), numerator.clone()),
+			return new Division(new Product(new Number(-1), numerator.clone()),
 					new Power(denominator.clone(), new Number(2)));
 	}
 
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number[] values) {
-		return MathN.div(values[0], values[1]);
+	public double calculateReal() {
+		return numerator.calculateReal() / denominator.calculateReal();
 	}
 }

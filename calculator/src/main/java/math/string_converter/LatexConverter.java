@@ -103,7 +103,6 @@ public class LatexConverter {
 			parenthesis.add(c);
 			if (parenthesis.parenthesisLevel < 0) {
 				endParenthesis();
-				// parenthesisLevel += parenthesis.parenthesisLevel;
 			}
 
 			return true;
@@ -114,15 +113,18 @@ public class LatexConverter {
 				latexParameter++;
 			}
 
-			if (c == '}') {
-				latexParameter--;
-			}
-
-			if (c == ' ' && latexParameter == 0) {
+			if (!Character.isLetter(c) && latexParameter == 0) {
 				mode = null;
+				if (c != ' ') {
+					stringData.append(c);
+				}
 				doLatex();
 			} else {
 				stringData.append(c);
+			}
+
+			if (c == '}') {
+				latexParameter--;
 			}
 
 			return true;
@@ -180,6 +182,8 @@ public class LatexConverter {
 		String latex = latexStructur[0];
 		stringData = new StringBuilder();
 
+		System.out.println(Arrays.toString(latexStructur) + "--185");
+
 		switch (latex) {
 		case "cdot":
 			builder.add(NodeElementType.Product);
@@ -218,6 +222,7 @@ public class LatexConverter {
 			return new String[] { nameAndParameters[0] };
 		}
 
+		System.out.println(latex + " " + Arrays.toString(nameAndParameters));
 		structur.add(nameAndParameters[0]);
 
 		StringBuilder str = new StringBuilder();

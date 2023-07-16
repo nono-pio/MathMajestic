@@ -1,10 +1,8 @@
 package math.element.functions;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionElement;
-import math.element.primary.Number;
 
 public class Sin extends FunctionElement {
 
@@ -13,13 +11,13 @@ public class Sin extends FunctionElement {
 	public Sin(Element value) {
 		super(value);
 	}
-	
+
 	// <----------------- Type -------------->
 
 	public ElementType getType() {
 		return ElementType.Sin;
 	}
-	
+
 	public String functionName() {
 		return "sin";
 	}
@@ -39,16 +37,15 @@ public class Sin extends FunctionElement {
 	public Element derivative() {
 		return new Cos(value.clone());
 	}
-	
+
 	public Element develop() {
 		// TODO
 		return this;
 	}
 
-
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number value) {
-		return MathN.sin(value);
+	public double calculateReal() {
+		return Math.sin(value.calculateReal());
 	}
 }

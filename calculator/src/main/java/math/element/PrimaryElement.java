@@ -1,6 +1,5 @@
 package math.element;
 
-import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
 import math.tools.ErrorMessage;
@@ -42,9 +41,4 @@ public abstract class PrimaryElement extends Element {
 	public Element derivative(DerivativeSettings settings, int index) {
 		return null;
 	}
-
-	// <---------------- ToValue ------------>
-
-	public abstract Number toValue(Number[] values);
-
 }

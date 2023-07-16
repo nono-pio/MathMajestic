@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.primary.Number;
@@ -112,8 +111,14 @@ public class Product extends Element {
 
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number[] values) {
-		return MathN.product(values);
+	public double calculateReal() {
+
+		double pro = 1;
+		for (Element element : values) {
+			pro *= element.calculateReal();
+		}
+
+		return pro;
 	}
 
 	// <----------- Other Function ---------->

@@ -1,10 +1,8 @@
 package math.element.functions;
 
-import math.MathN;
 import math.element.Element;
 import math.element.ElementType;
 import math.element.FunctionElement;
-import math.element.primary.Number;
 
 public class Acos extends FunctionElement {
 
@@ -13,13 +11,13 @@ public class Acos extends FunctionElement {
 	public Acos(Element value) {
 		super(value);
 	}
-	
+
 	// <----------------- Type -------------->
 
 	public ElementType getType() {
 		return ElementType.Cos;
 	}
-	
+
 	public String functionName() {
 		return "acos";
 	}
@@ -42,16 +40,15 @@ public class Acos extends FunctionElement {
 		// TODO
 		return this;
 	}
-	
+
 	public Element develop() {
 		// TODO
 		return this;
 	}
 
-
 	// <---------------- ToValue ------------>
 
-	public Number toValue(Number value) {
-		return MathN.acos(value);
+	public double calculateReal() {
+		return Math.acos(value.calculateReal());
 	}
 }

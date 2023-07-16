@@ -3,7 +3,6 @@ package math.variables;
 import java.util.HashMap;
 
 import math.element.Element;
-import math.element.primary.Number;
 import math.element.primary.Variable;
 
 public class Functions {
@@ -30,13 +29,14 @@ public class Functions {
 		return functions.get(variable);
 	}
 
-	public Number toValue(String functionName) {
+	public double calculateReal(String functionName) {
 		FunctionData data = getData(functionName);
 
 		if (data != null)
-			return data.function.toValue().getImportantValue();
+			return data.function.calculateReal();
 
-		return null;
+		// TODO
+		return 0;
 	}
 
 }

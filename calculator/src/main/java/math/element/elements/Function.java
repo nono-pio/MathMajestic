@@ -5,7 +5,6 @@ package math.element.elements;
 
 import math.element.Element;
 import math.element.ElementType;
-import math.element.primary.Number;
 import math.element.primary.Variable;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
@@ -91,13 +90,10 @@ public class Function extends Element {
 	}
 
 	// <---------------- ToValue ------------>
-	
-	public Number toValue(Number[] values) {
-		
-		data.getVariable().setValue(values[0]);
-		
-		return data.getFunction().toValue().getImportantValue();
+
+	public double calculateReal() {
+		// TODO
+		return 0;
 	}
 
-	
 }

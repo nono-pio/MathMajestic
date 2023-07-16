@@ -1,9 +1,8 @@
 package math.element;
 
-import math.tools.StringFormat;
-import math.element.primary.Number;
 import math.element.settings.DerivativeSettings;
 import math.element.settings.StringSettings;
+import math.tools.StringFormat;
 
 public abstract class FunctionElement extends Element {
 
@@ -64,13 +63,4 @@ public abstract class FunctionElement extends Element {
 	public Element derivative(DerivativeSettings settings, int index) {
 		return derivative();
 	}
-
-	// <---------------- ToValue ------------>
-
-	public Number toValue(Number[] values) {
-		return toValue(values[0]);
-	}
-
-	public abstract Number toValue(Number value);
-
 }

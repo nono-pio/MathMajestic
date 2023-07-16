@@ -1,7 +1,6 @@
 package math.variables;
 
 import math.element.Element;
-import math.element.primary.Number;
 import math.element.primary.Variable;
 
 public final class GlobalFunction {
@@ -20,8 +19,8 @@ public final class GlobalFunction {
 		return globalVariables.getData(functionName);
 	}
 
-	public static Number toValue(String functionName) {
-		return globalVariables.toValue(functionName);
+	public static double calculateReal(String functionName) {
+		return globalVariables.calculateReal(functionName);
 	}
 
 }
